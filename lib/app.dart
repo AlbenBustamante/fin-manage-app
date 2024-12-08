@@ -1,3 +1,5 @@
+import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
+
 import 'auth_flow/auth_flow_page.dart';
 import 'core/config/init_dependencies.dart';
 import 'features/auth/domain/repository/auth_repository.dart';
@@ -34,9 +36,11 @@ class MyAppView extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return _route(const AuthFlowPage());
-      case '/sign-up':
+      case SignUpPage.route:
         return _route(const SignUpPage());
-      case '/home':
+      case SignInPage.route:
+        return _route(const SignInPage());
+      case HomePage.route:
         return _route(const HomePage());
       default:
         return _route(const AuthFlowPage());

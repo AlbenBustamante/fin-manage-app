@@ -1,3 +1,5 @@
+import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:finmanageapp/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,10 +12,10 @@ class AuthFlowPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          String route = '/sign-up';
+          String route = SignInPage.route;
 
           if (state is Authenticated) {
-            route = '/home';
+            route = HomePage.route;
           }
 
           Navigator.pushNamedAndRemoveUntil(context, route, (_) => false);

@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUpPage extends StatelessWidget {
+  static const route = '/sign-up';
+
   const SignUpPage({super.key});
 
   @override

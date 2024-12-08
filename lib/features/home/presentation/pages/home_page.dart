@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
+  static const route = '/home';
+
   const HomePage({super.key});
 
   @override
