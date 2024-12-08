@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "239080856723",
+    "project_id": "fin-manage-app",
+    "storage_bucket": "fin-manage-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239080856723:android:65a0a00db9625499c10166",
+        "android_client_info": {
+          "package_name": "com.adbb.finmanageapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ252VSiL0T0U0G8f2qojSXo_tAHjo3nI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
