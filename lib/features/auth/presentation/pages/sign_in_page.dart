@@ -1,5 +1,6 @@
 import 'package:finmanageapp/core/config/init_dependencies.dart';
 import 'package:finmanageapp/features/auth/presentation/blocs/sign_in/sign_in_bloc.dart';
+import 'package:finmanageapp/features/auth/presentation/pages/sign_up_page.dart';
 import 'package:finmanageapp/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:finmanageapp/features/auth/presentation/widgets/auth_header.dart';
 import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
@@ -50,7 +51,8 @@ class _SignInViewState extends State<_SignInView> {
               AuthFooter(
                   theme: theme,
                   text: '¿No tienes cuenta?',
-                  linkText: 'Registrarme')
+                  linkText: 'Registrarme',
+                  route: SignUpPage.route)
             ])));
   }
 

@@ -1,13 +1,15 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class AuthFooter extends StatelessWidget {
   final ThemeData theme;
-  final String text, linkText;
+  final String text, linkText, route;
 
   const AuthFooter(
       {required this.theme,
       required this.text,
       required this.linkText,
+      required this.route,
       super.key});
 
   @override
@@ -19,6 +21,9 @@ class AuthFooter extends StatelessWidget {
             children: [
           TextSpan(
               text: linkText,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => Navigator.pushNamedAndRemoveUntil(
+                    context, route, (_) => false),
               style: TextStyle(
                   fontSize: theme.textTheme.bodyMedium!.fontSize,
                   color: Colors.blue,

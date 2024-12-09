@@ -1,3 +1,4 @@
+import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:finmanageapp/features/auth/presentation/widgets/auth_footer.dart';
 import 'package:finmanageapp/features/auth/presentation/widgets/auth_header.dart';
 import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
@@ -68,8 +69,9 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
             Divider(height: 75.0, color: Colors.grey[500]),
             AuthFooter(
                 theme: theme,
-                text: '¿Ya tienes cuenta? ',
-                linkText: 'Inicia sesión')
+                text: '¿Ya tienes cuenta?',
+                linkText: 'Inicia sesión',
+                route: SignInPage.route)
           ]),
         ),
       ),
