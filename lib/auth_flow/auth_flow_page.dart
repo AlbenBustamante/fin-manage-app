@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,9 @@ class AuthFlowPage extends StatelessWidget {
             route = HomePage.route;
           }
 
-          Navigator.pushNamedAndRemoveUntil(context, route, (_) => false);
+          log('Route: $route');
+
+          Navigator.popAndPushNamed(context, route);
         },
         child: Container());
   }

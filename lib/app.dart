@@ -1,4 +1,6 @@
 import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:finmanageapp/features/home/presentation/pages/new_expense_page.dart';
+import 'package:finmanageapp/features/home/presentation/pages/new_income_page.dart';
 
 import 'auth_flow/auth_flow_page.dart';
 import 'core/config/init_dependencies.dart';
@@ -42,6 +44,10 @@ class MyAppView extends StatelessWidget {
         return _route(const SignInPage());
       case HomePage.route:
         return _route(const HomePage());
+      case NewIncomePage.route:
+        return _route(const NewIncomePage());
+      case NewExpensePage.route:
+        return _route(const NewExpensePage());
       default:
         return _route(const AuthFlowPage());
     }

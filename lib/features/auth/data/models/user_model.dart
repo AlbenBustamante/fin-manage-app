@@ -12,9 +12,7 @@ class UserModel extends Equatable {
     return UserModel(id: user.id!, name: user.name, email: user.email);
   }
 
-  static UserModel empty() {
-    return const UserModel(id: '', name: '', email: '');
-  }
+  static const UserModel empty = UserModel(id: '', name: '', email: '');
 
   @override
   String toString() => 'UserModel: $id, $name, $email';

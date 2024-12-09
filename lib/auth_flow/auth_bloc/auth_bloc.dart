@@ -13,17 +13,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
   late StreamSubscription<UserModel?> _userSuscription;
 
-  AuthBloc(this._authRepository) : super(AuthInitial(UserModel.empty())) {
+  AuthBloc(this._authRepository) : super(const AuthInitial()) {
     _userSuscription = _authRepository.user.listen((user) {
       log('Authenticated User: $user');
       add(AuthChange(user));
     });
 
     on<AuthChange>((event, emit) {
-      if (event._user == UserModel.empty()) {
-        emit(Unauthenticated(UserModel.empty()));
+      if (event.user == UserModel.empty) {
+        emit(const Unauthenticated());
       } else {
-        emit(Authenticated(event._user));
+        emit(Authenticated(event.user));
       }
     });
   }

@@ -1,3 +1,5 @@
+import 'package:finmanageapp/features/home/presentation/pages/new_expense_page.dart';
+import 'package:finmanageapp/features/home/presentation/pages/new_income_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavbarFloatingActionButton extends StatelessWidget {
@@ -13,7 +15,8 @@ class CustomNavbarFloatingActionButton extends StatelessWidget {
       ]),
       child: FloatingActionButton(
           onPressed: () {
-            showDialog(context: context, builder: (context) => _dialog());
+            showDialog(
+                context: context, builder: (context) => _dialog(context));
           },
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: Colors.white,
@@ -22,19 +25,19 @@ class CustomNavbarFloatingActionButton extends StatelessWidget {
     );
   }
 
-  SimpleDialog _dialog() {
+  SimpleDialog _dialog(BuildContext context) {
     return SimpleDialog(
         title: Text('¿Qué quieres agregar?', style: theme.textTheme.titleLarge),
         children: [
-          _option('Nuevo gasto', () {}),
+          _option(context, 'Nuevo gasto', NewExpensePage.route),
           const SizedBox(height: 5.0),
-          _option('Nuevo ingreso', () {})
+          _option(context, 'Nuevo ingreso', NewIncomePage.route)
         ]);
   }
 
-  SimpleDialogOption _option(String text, void Function() onTap) {
+  SimpleDialogOption _option(BuildContext context, String text, String route) {
     return SimpleDialogOption(
-        onPressed: () => onTap(),
+        onPressed: () => Navigator.popAndPushNamed(context, route),
         padding: const EdgeInsets.symmetric(horizontal: 36.0, vertical: 12.0),
         child: Text(text,
             style: TextStyle(fontSize: 20.0, color: Colors.grey[700])));

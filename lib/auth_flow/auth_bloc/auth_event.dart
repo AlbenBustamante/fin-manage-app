@@ -8,12 +8,10 @@ sealed class AuthEvent extends Equatable {
 }
 
 class AuthChange extends AuthEvent {
-  final UserModel? _user;
+  final UserModel? user;
 
-  const AuthChange(this._user);
-
-  UserModel? get user => _user;
+  const AuthChange(this.user);
 
   @override
-  List<Object?> get props => [_user];
+  List<Object?> get props => [user];
 }

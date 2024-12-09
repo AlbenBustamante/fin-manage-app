@@ -17,9 +17,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Stream<UserModel?> get user =>
       _auth.authStateChanges().flatMap((firebaseUser) async* {
         if (firebaseUser == null) {
-          yield UserModel.empty();
+          yield UserModel.empty;
         } else {
-          await _collection.doc(firebaseUser.uid).get().then(
+          yield await _collection.doc(firebaseUser.uid).get().then(
               (doc) => UserModel.fromEntity(UserEntity.fromDocument(doc)));
         }
       });
