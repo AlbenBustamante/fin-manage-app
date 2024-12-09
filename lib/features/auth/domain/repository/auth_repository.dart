@@ -5,4 +5,6 @@ abstract class AuthRepository {
   Stream<UserModel?> get user;
 
   Future<UserModel> signUp({required SignUpParams params});
+
+  Future<void> signIn({required SignInParams params});
 }

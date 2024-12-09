@@ -45,4 +45,17 @@ class AuthRepositoryImpl extends AuthRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<void> signIn({required SignInParams params}) async {
+    try {
+      final email = params.email;
+      final password = params.password;
+
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }
