@@ -49,7 +49,7 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
             ScaffoldMessenger.of(context)
                 .showSnackBar(SnackBar(content: Text(state.message)));
 
-            Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
+            Navigator.pushNamed(context, SignInPage.route);
           }
 
           if (state is SignUpFailure) {
@@ -127,12 +127,12 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
     ]));
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _repeatPasswordController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _nameController.dispose();
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  //   _repeatPasswordController.dispose();
+  //   super.dispose();
+  // }
 }

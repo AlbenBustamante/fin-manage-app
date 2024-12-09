@@ -22,8 +22,7 @@ class AuthFooter extends StatelessWidget {
           TextSpan(
               text: linkText,
               recognizer: TapGestureRecognizer()
-                ..onTap = () => Navigator.pushNamedAndRemoveUntil(
-                    context, route, (_) => false),
+                ..onTap = () => Navigator.pushNamed(context, route),
               style: TextStyle(
                   fontSize: theme.textTheme.bodyMedium!.fontSize,
                   color: Colors.blue,
