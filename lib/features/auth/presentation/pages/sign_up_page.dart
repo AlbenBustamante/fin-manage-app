@@ -1,3 +1,5 @@
+import 'package:finmanageapp/features/auth/presentation/widgets/auth_footer.dart';
+import 'package:finmanageapp/features/auth/presentation/widgets/auth_header.dart';
 import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
 import 'package:finmanageapp/shared/components/custom_password_field.dart';
 import 'package:finmanageapp/shared/components/custom_text_field.dart';
@@ -57,30 +59,21 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(children: [
-            _header(theme),
+            AuthHeader(
+                theme: theme,
+                title: 'Crea una cuenta',
+                subtitle: 'Por favor, ingresa tus datos'),
             const SizedBox(height: 35.0),
             _form(context, theme, maxWidth),
             Divider(height: 75.0, color: Colors.grey[500]),
-            _loginText(theme)
+            AuthFooter(
+                theme: theme,
+                text: '¿Ya tienes cuenta? ',
+                linkText: 'Inicia sesión')
           ]),
         ),
       ),
     );
-  }
-
-  RichText _loginText(ThemeData theme) {
-    return RichText(
-        text: TextSpan(
-            style: theme.textTheme.bodyMedium,
-            text: '¿Ya tienes cuenta? ',
-            children: [
-          TextSpan(
-              text: 'Inicia sesión',
-              style: TextStyle(
-                  fontSize: theme.textTheme.bodyMedium!.fontSize,
-                  color: Colors.blue,
-                  fontWeight: FontWeight.w600))
-        ]));
   }
 
   Form _form(BuildContext context, ThemeData theme, double maxWidth) {
@@ -130,22 +123,6 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
         ),
       )
     ]));
-  }
-
-  Container _header(ThemeData theme) {
-    return Container(
-        height: 130.0,
-        alignment: Alignment.bottomLeft,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Crea una cuenta', style: theme.textTheme.titleLarge),
-            const SizedBox(height: 4.0),
-            Text('Por favor, ingresa tus datos',
-                style: theme.textTheme.titleMedium)
-          ],
-        ));
   }
 
   @override
