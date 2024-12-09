@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final ThemeData theme;
-  final String labelText;
+  String? labelText;
   final IconData icon;
-  final String hintText;
+  String? hintText;
 
-  const CustomTextField(
+  CustomTextField(
       {required this.controller,
       required this.theme,
-      required this.labelText,
+      this.labelText,
       required this.icon,
-      required this.hintText,
+      this.hintText,
       super.key});
 
   @override
@@ -20,7 +20,9 @@ class CustomTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style: theme.textTheme.labelMedium),
+        Visibility(
+            visible: labelText != null,
+            child: Text(labelText ?? '', style: theme.textTheme.labelMedium)),
         const SizedBox(height: 5.0),
         TextFormField(controller: controller, decoration: _decoration()),
         const SizedBox(height: 24.0)
