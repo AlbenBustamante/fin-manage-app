@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SignInBloc>(
-        create: (context) => ij<SignInBloc>(), child: _SignInView());
+        create: (context) => ij<SignInBloc>(), child: const _SignInView());
   }
 }
 
