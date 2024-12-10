@@ -1,6 +1,6 @@
-import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
-import 'package:finmanageapp/shared/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/new_transaction_form.dart';
 
 class NewExpensePage extends StatelessWidget {
   static const route = '/new-expense';
@@ -22,46 +22,15 @@ class NewExpensePage extends StatelessWidget {
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
-          child: SizedBox(
-            height: MediaQuery.sizeOf(context).height - 160.0,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Form(
-                      child: Column(children: [
-                    CustomTextField(
-                        controller: _amountController,
-                        theme: theme,
-                        align: TextAlign.center,
-                        hintText: '0',
-                        fontSize: 30.0,
-                        radius: 45.0),
-                    const SizedBox(height: 24.0),
-                    CustomTextField(
-                        controller: _categoryController,
-                        theme: theme,
-                        icon: Icons.category_outlined,
-                        hintText: 'Categoría'),
-                    CustomTextField(
-                        controller: _descriptionController,
-                        theme: theme,
-                        icon: Icons.note_alt_outlined,
-                        hintText: 'Descripción'),
-                    CustomTextField(
-                        controller: _dateController,
-                        theme: theme,
-                        icon: Icons.date_range_outlined,
-                        hintText: 'Fecha')
-                  ])),
-                  CustomElevatedButton(
-                      onTap: () {},
-                      backgroundColor: theme.colorScheme.primary,
-                      foregroundColor: Colors.white,
-                      text: 'Guardar',
-                      maxWidth: maxWidth,
-                      loading: false)
-                ]),
-          ),
+          child: NewTransactionForm(
+              amountController: _amountController,
+              categoryController: _categoryController,
+              descriptionController: _descriptionController,
+              dateController: _dateController,
+              theme: theme,
+              height: MediaQuery.sizeOf(context).height - 160.0,
+              maxWidth: maxWidth,
+              onTap: () {}),
         )));
   }
 }

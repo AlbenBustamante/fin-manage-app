@@ -9,7 +9,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const iconSize = 32.0;
+    const iconSize = 36.0;
 
     return BottomNavigationBar(
         showSelectedLabels: false,

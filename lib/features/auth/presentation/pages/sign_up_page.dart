@@ -57,22 +57,24 @@ class _SignUpPageViewState extends State<_SignUpPageView> {
                 .showSnackBar(SnackBar(content: Text(state.error)));
           }
         },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0),
-          child: Column(children: [
-            AuthHeader(
-                theme: theme,
-                title: 'Crea una cuenta',
-                subtitle: 'Por favor, ingresa tus datos'),
-            const SizedBox(height: 35.0),
-            _form(context, theme, maxWidth),
-            Divider(height: 75.0, color: Colors.grey[500]),
-            AuthFooter(
-                theme: theme,
-                text: '¿Ya tienes cuenta?',
-                linkText: 'Inicia sesión',
-                route: SignInPage.route)
-          ]),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+            child: Column(children: [
+              AuthHeader(
+                  theme: theme,
+                  title: 'Crea una cuenta',
+                  subtitle: 'Por favor, ingresa tus datos'),
+              const SizedBox(height: 35.0),
+              _form(context, theme, maxWidth),
+              Divider(height: 75.0, color: Colors.grey[500]),
+              AuthFooter(
+                  theme: theme,
+                  text: '¿Ya tienes cuenta?',
+                  linkText: 'Inicia sesión',
+                  route: SignInPage.route)
+            ]),
+          ),
         ),
       ),
     );
