@@ -29,24 +29,13 @@ class NewExpensePage extends StatelessWidget {
                 children: [
                   Form(
                       child: Column(children: [
-                    TextFormField(
+                    CustomTextField(
                         controller: _amountController,
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                            hintText: '0',
-                            hintStyle: const TextStyle(
-                                fontWeight: FontWeight.w300, fontSize: 30.0),
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(15.0)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: theme.colorScheme.primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(15.0)))),
+                        theme: theme,
+                        align: TextAlign.center,
+                        hintText: '0',
+                        fontSize: 30.0,
+                        radius: 45.0),
                     const SizedBox(height: 24.0),
                     CustomTextField(
                         controller: _categoryController,

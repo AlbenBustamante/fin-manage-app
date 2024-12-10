@@ -3,16 +3,22 @@ import 'package:flutter/material.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final ThemeData theme;
-  String? labelText;
-  final IconData icon;
-  String? hintText;
+  final IconData? icon;
+  final String? labelText;
+  final String? hintText;
+  final TextAlign align;
+  final double fontSize;
+  final double radius;
 
-  CustomTextField(
+  const CustomTextField(
       {required this.controller,
       required this.theme,
+      this.icon,
       this.labelText,
-      required this.icon,
       this.hintText,
+      this.align = TextAlign.left,
+      this.fontSize = 18.0,
+      this.radius = 15.0,
       super.key});
 
   @override
@@ -24,7 +30,11 @@ class CustomTextField extends StatelessWidget {
             visible: labelText != null,
             child: Text(labelText ?? '', style: theme.textTheme.labelMedium)),
         const SizedBox(height: 5.0),
-        TextFormField(controller: controller, decoration: _decoration()),
+        TextFormField(
+            controller: controller,
+            textAlign: align,
+            style: TextStyle(fontSize: fontSize, color: Colors.grey[900]),
+            decoration: _decoration()),
         const SizedBox(height: 24.0)
       ],
     );
@@ -32,23 +42,27 @@ class CustomTextField extends StatelessWidget {
 
   InputDecoration _decoration() {
     return InputDecoration(
-        prefixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: Icon(icon)),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 0, vertical: 20.0),
+        prefixIcon: icon != null
+            ? Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Icon(icon, size: 26.0))
+            : null,
         prefixIconColor: Colors.grey.shade700,
         hintText: hintText,
-        hintStyle: const TextStyle(fontWeight: FontWeight.w300, fontSize: 16.0),
+        hintStyle: TextStyle(fontWeight: FontWeight.w300, fontSize: fontSize),
         filled: true,
         fillColor: Colors.white,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(radius),
         ),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: theme.colorScheme.primary,
               width: 2.0,
             ),
-            borderRadius: BorderRadius.circular(15.0)));
+            borderRadius: BorderRadius.circular(radius)));
   }
 }

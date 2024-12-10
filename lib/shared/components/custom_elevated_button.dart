@@ -29,7 +29,7 @@ class CustomElevatedButton extends StatelessWidget {
 
   TextStyle _textStyle() {
     return TextStyle(
-        color: foregroundColor, fontWeight: FontWeight.w500, fontSize: 17.0);
+        color: foregroundColor, fontWeight: FontWeight.w500, fontSize: 18.0);
   }
 
   ButtonStyle _style() {
