@@ -6,7 +6,7 @@ class CategoryModel {
 
   const CategoryModel({required this.id, required this.name});
 
-  static CategoryModel fromEntity(CategoryEntity entity) {
+  factory CategoryModel.fromEntity(CategoryEntity entity) {
     return CategoryModel(id: entity.id ?? '', name: entity.name);
   }
 
