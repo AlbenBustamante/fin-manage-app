@@ -2,16 +2,17 @@ import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/domain/entities/description_entity.dart';
 
 class DescriptionModel {
-  final String id, text, userId;
+  String id;
+  final String text, userId;
   final TransactionType type;
 
-  const DescriptionModel(
+  DescriptionModel(
       {required this.id,
       required this.text,
       required this.userId,
       required this.type});
 
-  factory DescriptionModel.formEntity(DescriptionEntity entity) {
+  factory DescriptionModel.fromEntity(DescriptionEntity entity) {
     return DescriptionModel(
         id: entity.id ?? '',
         text: entity.text,

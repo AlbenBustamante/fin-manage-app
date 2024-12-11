@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:finmanageapp/core/api/api_collection.dart';
+import 'package:finmanageapp/core/api/api_collections.dart';
 import 'package:finmanageapp/core/util/params/auth_params.dart';
 import 'package:finmanageapp/features/auth/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +11,7 @@ import 'package:rxdart/rxdart.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final _auth = FirebaseAuth.instance;
-  final _collection = ApiCollection.users;
+  final _collection = ApiCollections.users;
 
   @override
   Stream<UserModel?> get user =>

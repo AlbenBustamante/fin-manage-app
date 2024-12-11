@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finmanageapp/core/util/enums.dart';
+import 'package:finmanageapp/core/util/params/description_params.dart';
 
 class DescriptionEntity {
   String? id;
@@ -26,5 +27,11 @@ class DescriptionEntity {
     description.id = doc.id;
 
     return description;
+  }
+
+  factory DescriptionEntity.fromParams(
+      String userId, CreateDescriptionParams params) {
+    return DescriptionEntity(
+        text: params.description, userId: userId, type: params.type);
   }
 }
