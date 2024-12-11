@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:finmanageapp/core/params/params.dart';
+import 'package:finmanageapp/core/util/params.dart';
 import 'package:finmanageapp/features/auth/data/models/user_model.dart';
 import 'package:finmanageapp/features/auth/domain/use_cases/sign_up_use_case.dart';
 

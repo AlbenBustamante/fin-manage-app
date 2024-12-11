@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finmanageapp/core/util/enums.dart';
 
 class TransactionEntity {
   String? id;
@@ -7,6 +8,7 @@ class TransactionEntity {
   final String descriptionId;
   final int value;
   final DateTime date;
+  final TransactionType type;
 
   TransactionEntity(
       {this.id,
@@ -14,7 +16,8 @@ class TransactionEntity {
       required this.categoryId,
       required this.descriptionId,
       required this.value,
-      required this.date});
+      required this.date,
+      required this.type});
 
   factory TransactionEntity.fromJson(Map<String, dynamic> json) {
     return TransactionEntity(
@@ -22,7 +25,8 @@ class TransactionEntity {
         categoryId: json['categoryId'],
         descriptionId: json['descriptionId'],
         value: json['value'],
-        date: (json['date'] as Timestamp).toDate());
+        date: (json['date'] as Timestamp).toDate(),
+        type: json['type'] as TransactionType);
   }
 
   Map<String, dynamic> toJson() => {
@@ -30,7 +34,8 @@ class TransactionEntity {
         'categoryId': categoryId,
         'descriptionId': descriptionId,
         'value': value,
-        'date': Timestamp.fromDate(date)
+        'date': Timestamp.fromDate(date),
+        'type': type
       };
 
   factory TransactionEntity.fromDocument(DocumentSnapshot doc) {

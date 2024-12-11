@@ -1,4 +1,4 @@
-import 'package:finmanageapp/core/params/params.dart';
+import 'package:finmanageapp/core/util/params.dart';
 import 'package:finmanageapp/features/auth/data/models/user_model.dart';
 
 abstract class AuthRepository {
