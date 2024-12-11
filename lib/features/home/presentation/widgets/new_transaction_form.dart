@@ -55,7 +55,6 @@ class NewTransactionForm extends StatelessWidget {
           hintText: '0',
           fontSize: 30.0,
           radius: 45.0),
-      const SizedBox(height: 24.0),
       CustomTextField(
           controller: _categoryController,
           theme: theme,
