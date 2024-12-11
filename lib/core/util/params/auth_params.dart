@@ -1,4 +1,4 @@
-import 'package:finmanageapp/features/auth/domain/entities/user_entity.dart';
+import '../../../features/auth/domain/entities/user_entity.dart';
 
 class SignUpParams {
   final UserEntity user;

@@ -1,16 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finmanageapp/core/util/enums.dart';
 
 class CategoryEntity {
   String? id;
   final String name;
+  final TransactionType type;
 
-  CategoryEntity({this.id, required this.name});
+  CategoryEntity({this.id, required this.name, required this.type});
 
   factory CategoryEntity.fromJson(Map<String, dynamic> json) {
-    return CategoryEntity(name: json['name']);
+    return CategoryEntity(
+        name: json['name'], type: json['type'] as TransactionType);
   }
 
-  Map<String, dynamic> toJson() => {'name': name};
+  Map<String, dynamic> toJson() => {'name': name, 'type': type};
 
   factory CategoryEntity.fromDocument(DocumentSnapshot doc) {
     final category =

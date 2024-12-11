@@ -5,7 +5,7 @@ import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
 import 'package:finmanageapp/shared/components/custom_password_field.dart';
 import 'package:finmanageapp/shared/components/custom_text_field.dart';
 import 'package:finmanageapp/core/config/init_dependencies.dart';
-import 'package:finmanageapp/core/util/params.dart';
+import 'package:finmanageapp/core/util/params/auth_params.dart';
 import 'package:finmanageapp/features/auth/domain/entities/user_entity.dart';
 import 'package:finmanageapp/features/auth/presentation/blocs/sign_up/sign_up_bloc.dart';
 import 'package:flutter/material.dart';

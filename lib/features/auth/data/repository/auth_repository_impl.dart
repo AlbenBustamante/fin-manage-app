@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:finmanageapp/core/api/api_collection.dart';
-import 'package:finmanageapp/core/util/params.dart';
+import 'package:finmanageapp/core/util/params/auth_params.dart';
 import 'package:finmanageapp/features/auth/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
