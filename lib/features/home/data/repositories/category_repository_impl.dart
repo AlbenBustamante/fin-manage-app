@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finmanageapp/core/api/api_collections.dart';
 import 'package:finmanageapp/core/util/params/category_params.dart';
 import 'package:finmanageapp/core/util/params/transaction_params.dart';
@@ -11,26 +13,36 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<List<CategoryModel>> fetchAllByType(
       {required GetByTransactionTypeParams params}) async {
-    final snapshot =
-        await _collection.where('type', isEqualTo: params.type).get();
+    try {
+      final snapshot =
+          await _collection.where('type', isEqualTo: params.type).get();
 
-    final List<CategoryModel> categories = [];
+      final List<CategoryModel> categories = [];
 
-    if (snapshot.docs.isNotEmpty) {
-      for (final doc in snapshot.docs) {
-        final entity = CategoryEntity.fromDocument(doc);
-        categories.add(CategoryModel.fromEntity(entity));
+      if (snapshot.docs.isNotEmpty) {
+        for (final doc in snapshot.docs) {
+          final entity = CategoryEntity.fromDocument(doc);
+          categories.add(CategoryModel.fromEntity(entity));
+        }
       }
-    }
 
-    return categories;
+      return categories;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 
   @override
   Future<String> register({required CreateCategoryParams params}) async {
-    final entity = CategoryEntity.fromParams(params);
-    final docRef = await _collection.add(entity.toJson());
+    try {
+      final entity = CategoryEntity.fromParams(params);
+      final docRef = await _collection.add(entity.toJson());
 
-    return docRef.id;
+      return docRef.id;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 }

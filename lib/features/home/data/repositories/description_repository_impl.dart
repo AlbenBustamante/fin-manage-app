@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finmanageapp/core/api/api_collections.dart';
 import 'package:finmanageapp/core/util/params/description_params.dart';
 import 'package:finmanageapp/core/util/params/transaction_params.dart';
@@ -14,28 +16,38 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
   @override
   Future<List<DescriptionModel>> fetchAllByType(
       {required GetByTransactionTypeParams params}) async {
-    final snapshot = await _collection
-        .where('userId', isEqualTo: _userId)
-        .where('type', isEqualTo: params.type)
-        .get();
+    try {
+      final snapshot = await _collection
+          .where('userId', isEqualTo: _userId)
+          .where('type', isEqualTo: params.type)
+          .get();
 
-    final List<DescriptionModel> descriptions = [];
+      final List<DescriptionModel> descriptions = [];
 
-    if (snapshot.docs.isNotEmpty) {
-      for (final doc in snapshot.docs) {
-        final entity = DescriptionEntity.fromDocument(doc);
-        descriptions.add(DescriptionModel.fromEntity(entity));
+      if (snapshot.docs.isNotEmpty) {
+        for (final doc in snapshot.docs) {
+          final entity = DescriptionEntity.fromDocument(doc);
+          descriptions.add(DescriptionModel.fromEntity(entity));
+        }
       }
-    }
 
-    return descriptions;
+      return descriptions;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 
   @override
   Future<String> register({required CreateDescriptionParams params}) async {
-    final entity = DescriptionEntity.fromParams(_userId, params);
-    final docRef = await _collection.add(entity.toJson());
+    try {
+      final entity = DescriptionEntity.fromParams(_userId, params);
+      final docRef = await _collection.add(entity.toJson());
 
-    return docRef.id;
+      return docRef.id;
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
   }
 }
