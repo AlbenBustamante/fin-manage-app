@@ -3,22 +3,25 @@ import 'dart:developer';
 import 'package:finmanageapp/core/api/api_collections.dart';
 import 'package:finmanageapp/core/util/params/description_params.dart';
 import 'package:finmanageapp/core/util/params/transaction_params.dart';
+import 'package:finmanageapp/features/auth/domain/repository/auth_repository.dart';
 import 'package:finmanageapp/features/home/data/models/description_model.dart';
 import 'package:finmanageapp/features/home/domain/entities/description_entity.dart';
 import 'package:finmanageapp/features/home/domain/repositories/description_repository.dart';
 
 class DescriptionRepositoryImpl implements DescriptionRepository {
-  final String _userId;
+  final AuthRepository _authRepository;
   final _collection = ApiCollections.descriptions;
 
-  DescriptionRepositoryImpl(this._userId);
+  DescriptionRepositoryImpl(this._authRepository);
 
   @override
   Future<List<DescriptionModel>> fetchAllByType(
       {required GetByTransactionTypeParams params}) async {
     try {
+      final user = await _authRepository.user.first;
+
       final snapshot = await _collection
-          .where('userId', isEqualTo: _userId)
+          .where('userId', isEqualTo: user!.id)
           .where('type', isEqualTo: params.type)
           .get();
 
@@ -41,7 +44,9 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
   @override
   Future<String> register({required CreateDescriptionParams params}) async {
     try {
-      final entity = DescriptionEntity.fromParams(_userId, params);
+      final user = await _authRepository.user.first;
+
+      final entity = DescriptionEntity.fromParams(user!.id, params);
       final docRef = await _collection.add(entity.toJson());
 
       return docRef.id;

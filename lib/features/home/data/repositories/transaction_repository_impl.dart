@@ -4,6 +4,7 @@ import 'package:finmanageapp/core/api/api_collections.dart';
 import 'package:finmanageapp/core/util/params/category_params.dart';
 import 'package:finmanageapp/core/util/params/description_params.dart';
 import 'package:finmanageapp/core/util/params/transaction_params.dart';
+import 'package:finmanageapp/features/auth/domain/repository/auth_repository.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:finmanageapp/features/home/domain/entities/transaction_entity.dart';
 import 'package:finmanageapp/features/home/domain/repositories/category_repository.dart';
@@ -12,22 +13,23 @@ import 'package:finmanageapp/features/home/domain/repositories/transaction_repos
 
 class TransactionRepositoryImpl implements TransactionRepository {
   final _collection = ApiCollections.transactions;
+  final AuthRepository _authRepository;
   final CategoryRepository _categoryRepository;
   final DescriptionRepository _descriptionRepository;
-  final String _userId;
 
-  TransactionRepositoryImpl(
-      this._userId, this._categoryRepository, this._descriptionRepository);
+  TransactionRepositoryImpl(this._authRepository, this._categoryRepository,
+      this._descriptionRepository);
 
   @override
   Future<TransactionModel> register(
       {required CreateTransactionParams params}) async {
     try {
+      final userId = (await _authRepository.user.first)!.id;
       final categoryId = await _categoryId(params: params);
       final descriptionId = await _descriptionId(params: params);
 
       final entity = TransactionEntity(
-          userId: _userId,
+          userId: userId,
           categoryId: categoryId,
           descriptionId: descriptionId,
           value: params.value,
