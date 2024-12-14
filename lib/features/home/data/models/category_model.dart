@@ -2,11 +2,11 @@ import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/domain/entities/category_entity.dart';
 
 class CategoryModel {
-  final String id, name;
+  String id;
+  final String name;
   final TransactionType type;
 
-  const CategoryModel(
-      {required this.id, required this.name, required this.type});
+  CategoryModel({required this.id, required this.name, required this.type});
 
   factory CategoryModel.fromEntity(CategoryEntity entity) {
     return CategoryModel(

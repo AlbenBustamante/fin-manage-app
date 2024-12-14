@@ -32,24 +32,10 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
   }
 
   @override
-  Future<DescriptionModel> register(
-      {required CreateDescriptionParams params}) async {
-    final snapshot = await _collection
-        .where('userId', isEqualTo: _userId)
-        .where('text', isEqualTo: params.description)
-        .where('type', isEqualTo: params.type)
-        .limit(1)
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      final entity = DescriptionEntity.fromDocument(snapshot.docs.first);
-      return DescriptionModel.fromEntity(entity);
-    }
-
+  Future<String> register({required CreateDescriptionParams params}) async {
     final entity = DescriptionEntity.fromParams(_userId, params);
-
     final docRef = await _collection.add(entity.toJson());
 
-    return DescriptionModel.fromEntity(entity)..id = docRef.id;
+    return docRef.id;
   }
 }

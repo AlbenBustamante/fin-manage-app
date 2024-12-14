@@ -27,24 +27,10 @@ class CategoryRepositoryImpl implements CategoryRepository {
   }
 
   @override
-  Future<CategoryModel> register({required CreateCategoryParams params}) async {
-    final name = params.category;
-    final type = params.type;
+  Future<String> register({required CreateCategoryParams params}) async {
+    final entity = CategoryEntity.fromParams(params);
+    final docRef = await _collection.add(entity.toJson());
 
-    final snapshot = await _collection
-        .where('name', isEqualTo: name)
-        .where('type', isEqualTo: type)
-        .limit(1)
-        .get();
-
-    if (snapshot.docs.isNotEmpty) {
-      final entity = CategoryEntity.fromDocument(snapshot.docs.first);
-      return CategoryModel.fromEntity(entity);
-    }
-
-    final docRef =
-        await _collection.add(CategoryEntity(name: name, type: type).toJson());
-
-    return CategoryModel(id: docRef.id, name: name, type: type);
+    return docRef.id;
   }
 }
