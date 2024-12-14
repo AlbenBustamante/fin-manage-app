@@ -10,9 +10,9 @@ class CreateTransactionParams {
   final String? category, description, categoryId, descriptionId;
   final int value;
   final DateTime date;
-  final TransactionType type;
+  TransactionType type;
 
-  const CreateTransactionParams(
+  CreateTransactionParams(
       {required this.category,
       required this.description,
       required this.categoryId,

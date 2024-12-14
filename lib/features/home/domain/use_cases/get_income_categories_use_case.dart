@@ -5,10 +5,10 @@ import 'package:finmanageapp/features/home/domain/repositories/category_reposito
 
 import '../../data/models/category_model.dart';
 
-class GetIncomeCategories extends UseCase<List<CategoryModel>, void> {
+class GetIncomeCategoriesUseCase extends UseCase<List<CategoryModel>, void> {
   final CategoryRepository _repository;
 
-  GetIncomeCategories(this._repository);
+  GetIncomeCategoriesUseCase(this._repository);
 
   @override
   Future<List<CategoryModel>> call({required void params}) {

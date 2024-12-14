@@ -4,10 +4,10 @@ import 'package:finmanageapp/core/util/params/transaction_params.dart';
 import 'package:finmanageapp/features/home/data/models/category_model.dart';
 import 'package:finmanageapp/features/home/domain/repositories/category_repository.dart';
 
-class GetExpenseCategories extends UseCase<List<CategoryModel>, void> {
+class GetExpenseCategoriesUseCase extends UseCase<List<CategoryModel>, void> {
   final CategoryRepository _repository;
 
-  GetExpenseCategories(this._repository);
+  GetExpenseCategoriesUseCase(this._repository);
 
   @override
   Future<List<CategoryModel>> call({required void params}) {
