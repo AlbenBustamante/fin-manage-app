@@ -9,7 +9,7 @@ sealed class ExpensesState extends Equatable {
 
 final class ExpensesInitial extends ExpensesState {}
 
-final class Loading extends ExpensesState {}
+final class FetchLoading extends ExpensesState {}
 
 final class FetchSuccess extends ExpensesState {
   final List<CategoryModel> categories;

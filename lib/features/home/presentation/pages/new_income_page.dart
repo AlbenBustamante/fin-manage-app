@@ -37,7 +37,11 @@ class _NewIncomePageState extends State<NewIncomePage> {
             }
           },
           builder: (context, state) {
-            if (state is IncomesInitial || state is Loading) {
+            if (state is IncomesInitial) {
+              return const Center(child: Text('Por favor, espera...'));
+            }
+
+            if (state is FetchLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 

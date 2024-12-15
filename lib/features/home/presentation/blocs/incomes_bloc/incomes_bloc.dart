@@ -17,7 +17,7 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
       this._getIncomeCategoriesUseCase, this._getIncomeDescriptionsUseCase)
       : super(IncomesInitial()) {
     on<FetchData>((event, emit) async {
-      emit(Loading());
+      emit(FetchLoading());
 
       try {
         final categories = await _getIncomeCategoriesUseCase(params: null);

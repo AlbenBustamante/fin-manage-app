@@ -38,7 +38,11 @@ class _NewExpensePageState extends State<NewExpensePage> {
             }
           },
           builder: (context, state) {
-            if (state is ExpensesInitial || state is Loading) {
+            if (state is ExpensesInitial) {
+              return const Center(child: Text('Por favor, espera...'));
+            }
+
+            if (state is FetchLoading) {
               return const Center(child: CircularProgressIndicator());
             }
 

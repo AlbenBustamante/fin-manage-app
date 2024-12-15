@@ -17,7 +17,7 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
       this._getExpenseCategoriesUseCase, this._getExpenseDescriptionsUseCase)
       : super(ExpensesInitial()) {
     on<FetchData>((event, emit) async {
-      emit(Loading());
+      emit(FetchLoading());
 
       try {
         final categories = await _getExpenseCategoriesUseCase();
