@@ -36,6 +36,7 @@ class NewTransactionForm extends StatelessWidget {
         Form(
             child: Column(children: [
           CustomTextField(
+              textInputType: TextInputType.number,
               controller: _amountController,
               theme: theme,
               align: TextAlign.center,
@@ -56,6 +57,7 @@ class NewTransactionForm extends StatelessWidget {
               icon: Icons.note_alt_outlined,
               hintText: 'Descripción'),
           CustomTextField(
+              textInputType: TextInputType.datetime,
               controller: _dateController,
               theme: theme,
               icon: Icons.date_range_outlined,
