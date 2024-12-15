@@ -1,4 +1,6 @@
 import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_expense_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_income_page.dart';
 
@@ -18,7 +20,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider<AuthBloc>(
         create: (context) => AuthBloc(ij<AuthRepository>()),
-        child: const MyAppView());
+        child: MultiBlocProvider(providers: [
+          BlocProvider(create: (context) => ij<ExpensesBloc>()),
+          BlocProvider(create: (context) => ij<IncomesBloc>())
+        ], child: const MyAppView()));
   }
 }
 

@@ -15,7 +15,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
       {required GetByTransactionTypeParams params}) async {
     try {
       final snapshot =
-          await _collection.where('type', isEqualTo: params.type).get();
+          await _collection.where('type', isEqualTo: params.type.name).get();
 
       final List<CategoryModel> categories = [];
 
@@ -27,8 +27,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
       }
 
       return categories;
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -40,8 +40,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
       final docRef = await _collection.add(entity.toJson());
 
       return docRef.id;
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }

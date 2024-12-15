@@ -19,7 +19,7 @@ class DescriptionEntity {
   }
 
   Map<String, dynamic> toJson() =>
-      {'text': text, 'userId': userId, 'type': type};
+      {'text': text, 'userId': userId, 'type': type.name};
 
   factory DescriptionEntity.fromDocument(DocumentSnapshot doc) {
     final description =

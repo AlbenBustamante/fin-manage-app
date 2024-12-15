@@ -7,7 +7,7 @@ sealed class ExpensesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchData extends ExpensesEvent {
+final class FetchData extends ExpensesEvent {
   final TransactionType type = TransactionType.expense;
 
   @override

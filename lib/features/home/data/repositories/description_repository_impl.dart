@@ -22,7 +22,7 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
 
       final snapshot = await _collection
           .where('userId', isEqualTo: user!.id)
-          .where('type', isEqualTo: params.type)
+          .where('type', isEqualTo: params.type.name)
           .get();
 
       final List<DescriptionModel> descriptions = [];
@@ -35,8 +35,8 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
       }
 
       return descriptions;
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -50,8 +50,8 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
       final docRef = await _collection.add(entity.toJson());
 
       return docRef.id;
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }

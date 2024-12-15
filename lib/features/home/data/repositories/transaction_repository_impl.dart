@@ -39,8 +39,8 @@ class TransactionRepositoryImpl implements TransactionRepository {
       final docRef = await _collection.add(entity.toJson());
 
       return TransactionModel.fromEntity(entity..id = docRef.id);
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }

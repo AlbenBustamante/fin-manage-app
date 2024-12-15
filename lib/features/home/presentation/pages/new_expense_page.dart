@@ -1,16 +1,29 @@
+import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/new_transaction_form.dart';
 
-class NewExpensePage extends StatelessWidget {
+class NewExpensePage extends StatefulWidget {
   static const route = '/new-expense';
 
+  const NewExpensePage({super.key});
+
+  @override
+  State<NewExpensePage> createState() => _NewExpensePageState();
+}
+
+class _NewExpensePageState extends State<NewExpensePage> {
   final _amountController = TextEditingController();
   final _categoryController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
 
-  NewExpensePage({super.key});
+  @override
+  void initState() {
+    context.read<ExpensesBloc>().add(FetchData());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +32,41 @@ class NewExpensePage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(title: const Text('Nuevo gasto')),
-        body: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
-          child: NewTransactionForm(
-              amountController: _amountController,
-              categoryController: _categoryController,
-              descriptionController: _descriptionController,
-              dateController: _dateController,
-              theme: theme,
-              height: MediaQuery.sizeOf(context).height - 160.0,
-              maxWidth: maxWidth,
-              onTap: () {}),
-        )));
+        body: BlocConsumer<ExpensesBloc, ExpensesState>(
+          listener: (context, state) {
+            if (state is FetchFailure) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.error)));
+            }
+          },
+          builder: (context, state) {
+            if (state is ExpensesInitial || state is Loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (state is FetchSuccess) {
+              return _view(theme, context, maxWidth);
+            }
+
+            return Container();
+          },
+        ));
+  }
+
+  SingleChildScrollView _view(
+      ThemeData theme, BuildContext context, double maxWidth) {
+    return SingleChildScrollView(
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+      child: NewTransactionForm(
+          amountController: _amountController,
+          categoryController: _categoryController,
+          descriptionController: _descriptionController,
+          dateController: _dateController,
+          theme: theme,
+          height: MediaQuery.sizeOf(context).height - 160.0,
+          maxWidth: maxWidth,
+          onTap: () {}),
+    ));
   }
 }

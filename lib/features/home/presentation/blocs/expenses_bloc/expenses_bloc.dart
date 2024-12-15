@@ -20,8 +20,8 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
       emit(Loading());
 
       try {
-        final categories = await _getExpenseCategoriesUseCase(params: null);
-        final descriptions = await _getExpenseDescriptionsUseCase(params: null);
+        final categories = await _getExpenseCategoriesUseCase();
+        final descriptions = await _getExpenseDescriptionsUseCase();
 
         emit(FetchSuccess(categories, descriptions));
       } catch (e) {

@@ -35,7 +35,7 @@ class TransactionEntity {
         'descriptionId': descriptionId,
         'value': value,
         'date': Timestamp.fromDate(date),
-        'type': type
+        'type': type.name
       };
 
   factory TransactionEntity.fromDocument(DocumentSnapshot doc) {

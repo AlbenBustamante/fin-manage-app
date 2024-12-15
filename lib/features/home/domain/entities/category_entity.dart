@@ -14,7 +14,7 @@ class CategoryEntity {
         name: json['name'], type: json['type'] as TransactionType);
   }
 
-  Map<String, dynamic> toJson() => {'name': name, 'type': type};
+  Map<String, dynamic> toJson() => {'name': name, 'type': type.name};
 
   factory CategoryEntity.fromDocument(DocumentSnapshot doc) {
     final category =
