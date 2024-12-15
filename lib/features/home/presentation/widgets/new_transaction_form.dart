@@ -5,12 +5,9 @@ import 'package:finmanageapp/shared/components/custom_auto_complete_text_field.d
 import 'package:finmanageapp/shared/components/custom_elevated_button.dart';
 import 'package:finmanageapp/shared/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class NewTransactionForm extends StatelessWidget {
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+class NewTransactionForm extends StatefulWidget {
   final ThemeData theme;
   final List<CategoryModel> categories;
   final List<DescriptionModel> descriptions;
@@ -18,7 +15,7 @@ class NewTransactionForm extends StatelessWidget {
   final bool loading;
   final double maxWidth;
 
-  NewTransactionForm({
+  const NewTransactionForm({
     required this.theme,
     required this.categories,
     required this.descriptions,
@@ -27,6 +24,25 @@ class NewTransactionForm extends StatelessWidget {
     required this.maxWidth,
     super.key,
   });
+
+  @override
+  State<NewTransactionForm> createState() => _NewTransactionFormState();
+}
+
+class _NewTransactionFormState extends State<NewTransactionForm> {
+  final TextEditingController _categoryController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+  var _selectedDate = DateTime.now();
+
+  static const _format = "EEE, dd MMM, ''yy";
+
+  @override
+  void initState() {
+    _dateController.text = DateFormat(_format).format(_selectedDate);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,40 +54,64 @@ class NewTransactionForm extends StatelessWidget {
           CustomTextField(
               textInputType: TextInputType.number,
               controller: _amountController,
-              theme: theme,
+              theme: widget.theme,
               align: TextAlign.center,
               hintText: '0',
               fontSize: 30.0,
               radius: 45.0),
+          const SizedBox(height: 12.0),
           CustomAutoCompleteTextField(
               controller: _categoryController,
-              elements: categories.map((category) => category.name).toList(),
-              theme: theme,
+              elements:
+                  widget.categories.map((category) => category.name).toList(),
+              theme: widget.theme,
               icon: Icons.category_outlined,
               hintText: 'Categoría'),
           CustomAutoCompleteTextField(
               controller: _descriptionController,
-              elements:
-                  descriptions.map((description) => description.text).toList(),
-              theme: theme,
+              elements: widget.descriptions
+                  .map((description) => description.text)
+                  .toList(),
+              theme: widget.theme,
               icon: Icons.note_alt_outlined,
               hintText: 'Descripción'),
-          CustomTextField(
-              textInputType: TextInputType.datetime,
-              controller: _dateController,
-              theme: theme,
-              icon: Icons.date_range_outlined,
-              hintText: 'Fecha')
+          GestureDetector(
+            onTap: () async {
+              await _onDateTap(context);
+            },
+            child: CustomTextField(
+                enabled: false,
+                textInputType: TextInputType.datetime,
+                controller: _dateController,
+                theme: widget.theme,
+                icon: Icons.date_range_outlined,
+                hintText: 'Fecha'),
+          )
         ])),
         CustomElevatedButton(
             onTap: _onTap,
-            backgroundColor: theme.colorScheme.primary,
+            backgroundColor: widget.theme.colorScheme.primary,
             foregroundColor: Colors.white,
             text: 'Guardar',
-            maxWidth: maxWidth,
-            loading: loading)
+            maxWidth: widget.maxWidth,
+            loading: widget.loading)
       ],
     );
+  }
+
+  Future<void> _onDateTap(BuildContext context) async {
+    final datePicked = await showDatePicker(
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(2024, 12),
+        lastDate: _selectedDate);
+
+    if (datePicked != null && datePicked != _selectedDate) {
+      setState(() {
+        _selectedDate = datePicked;
+        _dateController.text = DateFormat(_format).format(_selectedDate);
+      });
+    }
   }
 
   void _onTap() {
@@ -84,8 +124,8 @@ class NewTransactionForm extends StatelessWidget {
         categoryId: null,
         descriptionId: null,
         value: int.parse(_amountController.text),
-        date: DateTime.now());
+        date: _selectedDate);
 
-    callback(params);
+    widget.callback(params);
   }
 }

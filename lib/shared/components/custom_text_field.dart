@@ -10,11 +10,13 @@ class CustomTextField extends StatelessWidget {
   final TextAlign align;
   final double fontSize;
   final double radius;
+  final bool enabled;
 
   const CustomTextField(
       {required this.controller,
       required this.theme,
       this.icon,
+      this.enabled = true,
       this.labelText,
       this.hintText,
       this.textInputType = TextInputType.text,
@@ -33,6 +35,7 @@ class CustomTextField extends StatelessWidget {
             child: Text(labelText ?? '', style: theme.textTheme.labelMedium)),
         const SizedBox(height: 5.0),
         TextFormField(
+            enabled: enabled,
             keyboardType: textInputType,
             controller: controller,
             textAlign: align,
