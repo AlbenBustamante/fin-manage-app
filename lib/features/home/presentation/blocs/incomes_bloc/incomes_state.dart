@@ -29,3 +29,17 @@ final class FetchFailure extends IncomesState {
   @override
   List<Object> get props => [error];
 }
+
+final class SubmitLoading extends IncomesState {}
+
+final class SubmitSuccess extends IncomesState {
+  final TransactionModel transaction;
+
+  const SubmitSuccess(this.transaction);
+}
+
+final class SubmitFailure extends IncomesState {
+  final String error;
+
+  const SubmitFailure(this.error);
+}

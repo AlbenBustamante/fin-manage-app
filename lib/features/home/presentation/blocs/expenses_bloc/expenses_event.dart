@@ -13,3 +13,9 @@ final class FetchData extends ExpensesEvent {
   @override
   List<Object> get props => [type];
 }
+
+final class Submit extends ExpensesEvent {
+  final CreateTransactionParams params;
+
+  const Submit(this.params);
+}

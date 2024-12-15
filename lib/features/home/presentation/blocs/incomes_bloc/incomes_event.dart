@@ -13,3 +13,9 @@ final class FetchData extends IncomesEvent {
   @override
   List<Object> get props => [type];
 }
+
+final class Submit extends IncomesEvent {
+  final CreateTransactionParams params;
+
+  const Submit(this.params);
+}

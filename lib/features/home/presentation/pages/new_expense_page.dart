@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +16,6 @@ class NewExpensePage extends StatefulWidget {
 }
 
 class _NewExpensePageState extends State<NewExpensePage> {
-  final _amountController = TextEditingController();
-  final _dateController = TextEditingController();
-
   @override
   void initState() {
     context.read<ExpensesBloc>().add(FetchData());
@@ -36,6 +35,10 @@ class _NewExpensePageState extends State<NewExpensePage> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.error)));
             }
+
+            if (state is SubmitSuccess) {
+              log(state.transaction.toString());
+            }
           },
           builder: (context, state) {
             if (state is ExpensesInitial) {
@@ -46,7 +49,9 @@ class _NewExpensePageState extends State<NewExpensePage> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is FetchSuccess) {
+            if (state is FetchSuccess ||
+                state is SubmitSuccess ||
+                state is SubmitLoading) {
               return _view(theme, context, maxWidth, state);
             }
 
@@ -56,19 +61,25 @@ class _NewExpensePageState extends State<NewExpensePage> {
   }
 
   SingleChildScrollView _view(ThemeData theme, BuildContext context,
-      double maxWidth, FetchSuccess state) {
+      double maxWidth, ExpensesState state) {
     return SingleChildScrollView(
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
-      child: NewTransactionForm(
-          amountController: _amountController,
-          dateController: _dateController,
-          theme: theme,
-          height: MediaQuery.sizeOf(context).height - 160.0,
-          maxWidth: maxWidth,
-          onTap: () {},
-          categories: state.categories,
-          descriptions: state.descriptions),
-    ));
+            padding:
+                const EdgeInsets.symmetric(horizontal: 25.0, vertical: 25.0),
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height - 160.0,
+              child: _form(theme, maxWidth, state),
+            )));
+  }
+
+  NewTransactionForm _form(
+      ThemeData theme, double maxWidth, ExpensesState state) {
+    return NewTransactionForm(
+        theme: theme,
+        categories: state.categories,
+        descriptions: state.descriptions,
+        callback: (params) => context.read<ExpensesBloc>().add(Submit(params)),
+        loading: state is SubmitLoading,
+        maxWidth: maxWidth);
   }
 }

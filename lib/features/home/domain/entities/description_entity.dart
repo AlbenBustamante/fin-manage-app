@@ -15,7 +15,8 @@ class DescriptionEntity {
     return DescriptionEntity(
         text: json['text'],
         userId: json['userId'],
-        type: json['type'] as TransactionType);
+        type: TransactionType.values
+            .firstWhere((type) => type.name == json['type']));
   }
 
   Map<String, dynamic> toJson() =>

@@ -11,7 +11,9 @@ class CategoryEntity {
 
   factory CategoryEntity.fromJson(Map<String, dynamic> json) {
     return CategoryEntity(
-        name: json['name'], type: json['type'] as TransactionType);
+        name: json['name'],
+        type: TransactionType.values
+            .firstWhere((type) => type.name == json['type']));
   }
 
   Map<String, dynamic> toJson() => {'name': name, 'type': type.name};

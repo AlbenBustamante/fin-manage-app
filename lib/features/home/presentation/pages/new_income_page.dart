@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/widgets/new_transaction_form.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +15,6 @@ class NewIncomePage extends StatefulWidget {
 }
 
 class _NewIncomePageState extends State<NewIncomePage> {
-  final _amountController = TextEditingController();
-  final _dateController = TextEditingController();
-
   @override
   void initState() {
     context.read<IncomesBloc>().add(FetchData());
@@ -35,6 +34,10 @@ class _NewIncomePageState extends State<NewIncomePage> {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.error)));
             }
+
+            if (state is SubmitSuccess) {
+              log(state.transaction.toString());
+            }
           },
           builder: (context, state) {
             if (state is IncomesInitial) {
@@ -45,7 +48,7 @@ class _NewIncomePageState extends State<NewIncomePage> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is FetchSuccess) {
+            if (state is FetchSuccess || state is SubmitSuccess) {
               return _view(theme, size, state);
             }
 
@@ -54,18 +57,26 @@ class _NewIncomePageState extends State<NewIncomePage> {
         ));
   }
 
-  SingleChildScrollView _view(ThemeData theme, Size size, FetchSuccess state) {
+  SingleChildScrollView _view(ThemeData theme, Size size, IncomesState state) {
+    final maxWidth = size.width - 50.0;
+
     return SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: NewTransactionForm(
-                amountController: _amountController,
-                dateController: _dateController,
-                theme: theme,
-                maxWidth: size.width - 50.0,
-                height: size.height - 160.0,
-                onTap: () {},
-                categories: state.categories,
-                descriptions: state.descriptions)));
+            child: SizedBox(
+              height: size.height - 160.0,
+              child: _form(theme, state, maxWidth),
+            )));
+  }
+
+  NewTransactionForm _form(
+      ThemeData theme, IncomesState state, double maxWidth) {
+    return NewTransactionForm(
+        theme: theme,
+        categories: (state as FetchSuccess).categories,
+        descriptions: state.descriptions,
+        callback: (params) => context.read<IncomesBloc>().add(Submit(params)),
+        loading: state is SubmitLoading,
+        maxWidth: maxWidth);
   }
 }

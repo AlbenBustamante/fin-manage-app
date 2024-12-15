@@ -34,7 +34,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
           descriptionId: descriptionId,
           value: params.value,
           date: params.date,
-          type: params.type);
+          type: params.type!);
 
       final docRef = await _collection.add(entity.toJson());
 
@@ -49,7 +49,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     return params.categoryId ??
         await _categoryRepository.register(
             params: CreateCategoryParams(
-                category: params.category!, type: params.type));
+                category: params.category!, type: params.type!));
   }
 
   Future<String> _descriptionId(
@@ -57,6 +57,6 @@ class TransactionRepositoryImpl implements TransactionRepository {
     return params.descriptionId ??
         await _descriptionRepository.register(
             params: CreateDescriptionParams(
-                description: params.description!, type: params.type));
+                description: params.description!, type: params.type!));
   }
 }

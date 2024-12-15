@@ -52,7 +52,11 @@ void init() {
   ij.registerSingleton(SignUpBloc(ij<SignUpUseCase>()));
   ij.registerSingleton(SignInBloc(ij<SignInUseCase>()));
   ij.registerSingleton(ExpensesBloc(
-      ij<GetExpenseCategoriesUseCase>(), ij<GetExpenseDescriptionsUseCase>()));
+      ij<GetExpenseCategoriesUseCase>(),
+      ij<GetExpenseDescriptionsUseCase>(),
+      ij<RegisterExpenseTransactionUseCase>()));
   ij.registerSingleton(IncomesBloc(
-      ij<GetIncomeCategoriesUseCase>(), ij<GetIncomeDescriptionsUseCase>()));
+      ij<GetIncomeCategoriesUseCase>(),
+      ij<GetIncomeDescriptionsUseCase>(),
+      ij<RegisterIncomeTransactionUseCase>()));
 }
