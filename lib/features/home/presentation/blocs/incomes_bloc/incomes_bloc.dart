@@ -16,6 +16,8 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
   final GetIncomeCategoriesUseCase _getIncomeCategoriesUseCase;
   final GetIncomeDescriptionsUseCase _getIncomeDescriptionsUseCase;
   final RegisterIncomeTransactionUseCase _registerIncomeTransactionUseCase;
+  final _categories = <CategoryModel>[];
+  final _descriptions = <DescriptionModel>[];
 
   IncomesBloc(
       this._getIncomeCategoriesUseCase,
@@ -26,10 +28,10 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
       emit(FetchLoading());
 
       try {
-        final categories = await _getIncomeCategoriesUseCase(params: null);
-        final descriptions = await _getIncomeDescriptionsUseCase(params: null);
+        _categories.addAll(await _getIncomeCategoriesUseCase());
+        _descriptions.addAll(await _getIncomeDescriptionsUseCase());
 
-        emit(FetchSuccess(categories, descriptions));
+        emit(FetchSuccess(_categories, _descriptions));
       } catch (e) {
         emit(FetchFailure(e.toString()));
       }
@@ -41,7 +43,7 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
       try {
         final transaction =
             await _registerIncomeTransactionUseCase(params: event.params);
-        emit(SubmitSuccess(transaction));
+        emit(SubmitSuccess(transaction, _categories, _descriptions));
       } catch (e) {
         emit(SubmitFailure(e.toString()));
       }

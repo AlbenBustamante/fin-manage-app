@@ -11,7 +11,7 @@ class GetIncomeDescriptionsUseCase
   GetIncomeDescriptionsUseCase(this._repository);
 
   @override
-  Future<List<DescriptionModel>> call({required void params}) {
+  Future<List<DescriptionModel>> call({void params}) {
     return _repository.fetchAllByType(
         params: const GetByTransactionTypeParams(type: TransactionType.income));
   }

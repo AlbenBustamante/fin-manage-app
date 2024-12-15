@@ -48,7 +48,9 @@ class _NewIncomePageState extends State<NewIncomePage> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            if (state is FetchSuccess || state is SubmitSuccess) {
+            if (state is FetchSuccess ||
+                state is SubmitLoading ||
+                state is SubmitSuccess) {
               return _view(theme, size, state);
             }
 
@@ -73,7 +75,7 @@ class _NewIncomePageState extends State<NewIncomePage> {
       ThemeData theme, IncomesState state, double maxWidth) {
     return NewTransactionForm(
         theme: theme,
-        categories: (state as FetchSuccess).categories,
+        categories: state.categories,
         descriptions: state.descriptions,
         callback: (params) => context.read<IncomesBloc>().add(Submit(params)),
         loading: state is SubmitLoading,

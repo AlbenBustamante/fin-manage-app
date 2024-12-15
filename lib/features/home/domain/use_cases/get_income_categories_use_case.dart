@@ -11,7 +11,7 @@ class GetIncomeCategoriesUseCase extends UseCase<List<CategoryModel>, void> {
   GetIncomeCategoriesUseCase(this._repository);
 
   @override
-  Future<List<CategoryModel>> call({required void params}) {
+  Future<List<CategoryModel>> call({void params}) {
     return _repository.fetchAllByType(
         params: const GetByTransactionTypeParams(type: TransactionType.income));
   }
