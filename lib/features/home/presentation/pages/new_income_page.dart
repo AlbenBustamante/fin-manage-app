@@ -14,8 +14,6 @@ class NewIncomePage extends StatefulWidget {
 
 class _NewIncomePageState extends State<NewIncomePage> {
   final _amountController = TextEditingController();
-  final _categoryController = TextEditingController();
-  final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
 
   @override
@@ -44,7 +42,7 @@ class _NewIncomePageState extends State<NewIncomePage> {
             }
 
             if (state is FetchSuccess) {
-              return _view(theme, size);
+              return _view(theme, size, state);
             }
 
             return Container();
@@ -52,18 +50,18 @@ class _NewIncomePageState extends State<NewIncomePage> {
         ));
   }
 
-  SingleChildScrollView _view(ThemeData theme, Size size) {
+  SingleChildScrollView _view(ThemeData theme, Size size, FetchSuccess state) {
     return SingleChildScrollView(
         child: Padding(
             padding: const EdgeInsets.all(25.0),
             child: NewTransactionForm(
                 amountController: _amountController,
-                categoryController: _categoryController,
-                descriptionController: _descriptionController,
                 dateController: _dateController,
                 theme: theme,
                 maxWidth: size.width - 50.0,
                 height: size.height - 160.0,
-                onTap: () {})));
+                onTap: () {},
+                categories: state.categories,
+                descriptions: state.descriptions)));
   }
 }
