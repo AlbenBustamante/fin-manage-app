@@ -36,8 +36,8 @@ class _HomePageState extends State<HomePage> {
   AppBar _appBar(ThemeData theme) {
     return AppBar(
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('¡Bienvenido!', style: theme.textTheme.titleLarge),
-          Text('Cristal', style: theme.textTheme.titleMedium)
+          Text('¡Bienvenido!', style: theme.textTheme.titleMedium),
+          Text('Cristal', style: theme.textTheme.titleLarge)
         ]),
         titleSpacing: 25.0,
         actions: [
