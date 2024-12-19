@@ -19,6 +19,7 @@ class _HomePageState extends State<HomePage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+        appBar: _appBar(theme),
         body: const Center(child: Text('Home Page')),
         bottomNavigationBar: CustomBottomNavigationBar(
             onTap: (index) {
@@ -30,5 +31,25 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: CustomNavbarFloatingActionButton(theme: theme),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.centerDocked);
+  }
+
+  AppBar _appBar(ThemeData theme) {
+    return AppBar(
+        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('¡Bienvenido!', style: theme.textTheme.titleLarge),
+          Text('Cristal', style: theme.textTheme.titleMedium)
+        ]),
+        titleSpacing: 25.0,
+        actions: [
+          Container(
+              margin: const EdgeInsets.only(right: 25.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25.0)),
+              child: IconButton(
+                  icon: Icon(Icons.settings,
+                      size: 32.0, color: theme.colorScheme.primary),
+                  onPressed: () {}))
+        ]);
   }
 }
