@@ -46,17 +46,15 @@ class TransactionRepositoryImpl implements TransactionRepository {
   }
 
   Future<String> _categoryId({required CreateTransactionParams params}) async {
-    return params.categoryId ??
-        await _categoryRepository.register(
-            params: CreateCategoryParams(
-                category: params.category!, type: params.type!));
+    return await _categoryRepository.register(
+        params: CreateCategoryParams(
+            category: params.category, type: params.type!));
   }
 
   Future<String> _descriptionId(
       {required CreateTransactionParams params}) async {
-    return params.descriptionId ??
-        await _descriptionRepository.register(
-            params: CreateDescriptionParams(
-                description: params.description!, type: params.type!));
+    return await _descriptionRepository.register(
+        params: CreateDescriptionParams(
+            description: params.description, type: params.type!));
   }
 }

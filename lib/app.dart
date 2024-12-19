@@ -50,9 +50,9 @@ class MyAppView extends StatelessWidget {
       case HomePage.route:
         return _route(const HomePage());
       case NewIncomePage.route:
-        return _route(NewIncomePage());
+        return _route(const NewIncomePage());
       case NewExpensePage.route:
-        return _route(NewExpensePage());
+        return _route(const NewExpensePage());
       default:
         return _route(const AuthFlowPage());
     }

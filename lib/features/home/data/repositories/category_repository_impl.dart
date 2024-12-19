@@ -36,6 +36,16 @@ class CategoryRepositoryImpl implements CategoryRepository {
   @override
   Future<String> register({required CreateCategoryParams params}) async {
     try {
+      final snapshot = await _collection
+          .limit(1)
+          .where('type', isEqualTo: params.type.name)
+          .where('nameUpper', isEqualTo: params.category.toUpperCase())
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        return snapshot.docs.first.id;
+      }
+
       final entity = CategoryEntity.fromParams(params);
       final docRef = await _collection.add(entity.toJson());
 

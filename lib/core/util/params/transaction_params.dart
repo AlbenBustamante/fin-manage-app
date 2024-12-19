@@ -7,7 +7,7 @@ class GetByTransactionTypeParams {
 }
 
 class CreateTransactionParams {
-  final String? category, description, categoryId, descriptionId;
+  final String category, description;
   final int value;
   final DateTime date;
   TransactionType? type;
@@ -15,8 +15,6 @@ class CreateTransactionParams {
   CreateTransactionParams(
       {required this.category,
       required this.description,
-      required this.categoryId,
-      required this.descriptionId,
       required this.value,
       required this.date,
       this.type});

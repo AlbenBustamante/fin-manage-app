@@ -46,7 +46,19 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
     try {
       final user = await _authRepository.user.first;
 
-      final entity = DescriptionEntity.fromParams(user!.id, params);
+      final snapshot = await _collection
+          .limit(1)
+          .where('userId', isEqualTo: user!.id)
+          .where('type', isEqualTo: params.type.name)
+          .where('textUpper', isEqualTo: params.description.toUpperCase())
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final doc = snapshot.docs.first;
+        return doc.id;
+      }
+
+      final entity = DescriptionEntity.fromParams(user.id, params);
       final docRef = await _collection.add(entity.toJson());
 
       return docRef.id;

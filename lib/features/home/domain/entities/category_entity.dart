@@ -4,19 +4,26 @@ import 'package:finmanageapp/core/util/params/category_params.dart';
 
 class CategoryEntity {
   String? id;
+  final String nameUpper;
   final String name;
   final TransactionType type;
 
-  CategoryEntity({this.id, required this.name, required this.type});
+  CategoryEntity(
+      {this.id,
+      required this.nameUpper,
+      required this.name,
+      required this.type});
 
   factory CategoryEntity.fromJson(Map<String, dynamic> json) {
     return CategoryEntity(
+        nameUpper: json['nameUpper'],
         name: json['name'],
         type: TransactionType.values
             .firstWhere((type) => type.name == json['type']));
   }
 
-  Map<String, dynamic> toJson() => {'name': name, 'type': type.name};
+  Map<String, dynamic> toJson() =>
+      {'nameUpper': nameUpper, 'name': name, 'type': type.name};
 
   factory CategoryEntity.fromDocument(DocumentSnapshot doc) {
     final category =
@@ -27,6 +34,9 @@ class CategoryEntity {
   }
 
   factory CategoryEntity.fromParams(CreateCategoryParams params) {
-    return CategoryEntity(name: params.category, type: params.type);
+    return CategoryEntity(
+        nameUpper: params.category.toUpperCase(),
+        name: params.category,
+        type: params.type);
   }
 }

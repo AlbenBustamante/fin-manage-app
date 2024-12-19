@@ -121,8 +121,6 @@ class _NewTransactionFormState extends State<NewTransactionForm> {
     final params = CreateTransactionParams(
         category: category,
         description: description,
-        categoryId: null,
-        descriptionId: null,
         value: int.parse(_amountController.text),
         date: _selectedDate);
 
