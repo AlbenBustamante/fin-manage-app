@@ -24,12 +24,30 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Column(children: [_card(width, theme)]),
+          child: Column(children: [
+            _card(width, theme),
+            const SizedBox(height: 40.0),
+            _transactionsTitle()
+          ]),
         )),
         bottomNavigationBar: _navigationBar(),
         floatingActionButton: CustomNavbarFloatingActionButton(theme: theme),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.centerDocked);
+  }
+
+  Row _transactionsTitle() {
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      Text('Transacciones',
+          style: TextStyle(
+              color: Colors.grey[800],
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold)),
+      GestureDetector(
+          onTap: () {},
+          child: Text('Ver todo',
+              style: TextStyle(color: Colors.blue[800], fontSize: 18.0)))
+    ]);
   }
 
   Container _card(double width, ThemeData theme) {
