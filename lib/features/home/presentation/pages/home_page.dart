@@ -22,18 +22,56 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: _appBar(theme),
         body: SingleChildScrollView(
-            child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Column(children: [
-            _card(width, theme),
-            const SizedBox(height: 40.0),
-            _transactionsTitle()
-          ]),
-        )),
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Column(children: [
+              _card(width, theme),
+              const SizedBox(height: 40.0),
+              _transactionsTitle(),
+              const SizedBox(height: 20.0),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width),
+              _transaction(width)
+            ]),
+          ),
+        ),
         bottomNavigationBar: _navigationBar(),
         floatingActionButton: CustomNavbarFloatingActionButton(theme: theme),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.centerDocked);
+  }
+
+  Container _transaction(double width) {
+    return Container(
+        margin: const EdgeInsets.only(bottom: 20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0),
+        width: width,
+        height: 100.0,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
+        child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Comida',
+                  style:
+                      TextStyle(fontSize: 19.0, fontWeight: FontWeight.w900)),
+              Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('9.999.999',
+                        style: TextStyle(
+                            fontSize: 18.0, fontWeight: FontWeight.bold)),
+                    Text('Hoy', style: TextStyle(fontWeight: FontWeight.w300))
+                  ])
+            ]));
   }
 
   Row _transactionsTitle() {
@@ -80,14 +118,13 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 44.0,
                 fontWeight: FontWeight.bold))
       ]),
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        _cardStat(Icons.arrow_downward, false, 999999999),
-        _cardStat(Icons.arrow_upward, true, 999999999)
-      ])
+      Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [_cardStat(false, 999999999), _cardStat(true, 999999999)])
     ]);
   }
 
-  Row _cardStat(IconData icon, bool expense, int amount) {
+  Row _cardStat(bool expense, int amount) {
     return Row(
       children: [
         Container(
@@ -95,7 +132,7 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
               color: Colors.black.withOpacity(.1),
               borderRadius: BorderRadius.circular(25.0)),
-          child: Icon(icon,
+          child: Icon(expense ? Icons.arrow_upward : Icons.arrow_downward,
               size: 32.0, color: expense ? Colors.red[400] : Colors.green[400]),
         ),
         const SizedBox(width: 12.0),
@@ -124,6 +161,7 @@ class _HomePageState extends State<HomePage> {
 
   AppBar _appBar(ThemeData theme) {
     return AppBar(
+        toolbarHeight: 80.0,
         title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text('¡Bienvenido!', style: theme.textTheme.titleMedium),
           Text('Cristal', style: theme.textTheme.titleLarge)
