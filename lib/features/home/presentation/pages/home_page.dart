@@ -56,7 +56,10 @@ class _HomePageState extends State<HomePage> {
         height: width - 150.00,
         decoration: BoxDecoration(
             color: theme.colorScheme.primary,
-            borderRadius: BorderRadius.circular(36.0)),
+            borderRadius: BorderRadius.circular(36.0),
+            boxShadow: const [
+              BoxShadow(color: Colors.grey, spreadRadius: 3.0, blurRadius: 12.0)
+            ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
           child: _cardStats(),
