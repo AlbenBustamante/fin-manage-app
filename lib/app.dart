@@ -76,7 +76,7 @@ class MyAppView extends StatelessWidget {
                 fontWeight: FontWeight.w300,
                 color: Colors.grey[700]),
             labelMedium:
-                const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w500),
+                const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
             bodyMedium: TextStyle(
                 fontSize: 17.0,
                 fontWeight: FontWeight.w400,
