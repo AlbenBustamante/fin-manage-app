@@ -77,23 +77,28 @@ class _HomePageViewState extends State<_HomePageView> {
   }
 
   Widget _view(ThemeData theme, double width, HomeState state) {
-    return Padding(
-      padding: const EdgeInsets.all(25.0),
-      child: Column(children: [
-        _card(width, theme, state),
-        const SizedBox(height: 40.0),
-        _transactionsTitle(),
-        const SizedBox(height: 20.0),
-        if (state is Success)
-          Flexible(
-            child: ListView.builder(
-              itemCount: state.transactions.length,
-              itemBuilder: (context, index) {
-                return _transaction(width, state.transactions[index]);
-              },
-            ),
-          )
-      ]),
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<HomeBloc>().add(FetchData());
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Column(children: [
+          _card(width, theme, state),
+          const SizedBox(height: 40.0),
+          _transactionsTitle(),
+          const SizedBox(height: 20.0),
+          if (state is Success)
+            Flexible(
+              child: ListView.builder(
+                itemCount: state.transactions.length,
+                itemBuilder: (context, index) {
+                  return _transaction(width, state.transactions[index]);
+                },
+              ),
+            )
+        ]),
+      ),
     );
   }
 
