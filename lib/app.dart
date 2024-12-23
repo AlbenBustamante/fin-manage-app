@@ -74,6 +74,9 @@ class MyAppView extends StatelessWidget {
 
   ThemeData _theme() {
     return ThemeData(
+        appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(fontSize: 20.0, color: Colors.grey[800]),
+            foregroundColor: Colors.grey[800]),
         colorScheme: ColorScheme.light(
             surface: Colors.grey.shade100, primary: Colors.deepPurple[500]!),
         textTheme: TextTheme(

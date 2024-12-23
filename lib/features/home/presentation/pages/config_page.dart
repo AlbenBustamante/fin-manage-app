@@ -13,7 +13,12 @@ class ConfigPage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Configuración')),
+        appBar: AppBar(
+            title: const Text('Configuración',
+                style: TextStyle(color: Colors.white)),
+            backgroundColor: Colors.deepPurple[900],
+            foregroundColor: Colors.white),
+        backgroundColor: Colors.deepPurple[900],
         body: BlocListener<ConfigBloc, ConfigState>(
             listener: (context, state) {
               if (state is SignOutSuccess) {
@@ -33,13 +38,15 @@ class ConfigPage extends StatelessWidget {
             children: [
               Container(),
               Column(children: [
-                const Divider(),
+                const Divider(color: Colors.white, thickness: 0.5),
                 ListTile(
-                    leading: Icon(Icons.power_off,
-                        color: Colors.grey[800], size: 28.0),
-                    title: Text('Cerrar sesión',
-                        style:
-                            TextStyle(color: Colors.grey[800], fontSize: 20.0)),
+                    leading: const Icon(Icons.logout,
+                        color: Colors.white, size: 28.0),
+                    title: const Text('Cerrar sesión',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w400)),
                     onTap: () {
                       context.read<ConfigBloc>().add(SignOut());
                     })

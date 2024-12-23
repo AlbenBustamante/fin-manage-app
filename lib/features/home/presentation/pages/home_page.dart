@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:finmanageapp/core/config/init_dependencies.dart';
 import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
@@ -51,11 +49,6 @@ class _HomePageViewState extends State<_HomePageView> {
         appBar: _appBar(theme),
         body: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
-            if (state is Success) {
-              log(state.user.toString());
-              log('${state.totalBalance}');
-            }
-
             if (state is Failure) {
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.error)));
@@ -116,7 +109,7 @@ class _HomePageViewState extends State<_HomePageView> {
           margin: const EdgeInsets.only(bottom: 20.0),
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           width: width,
-          height: 100.0,
+          height: 85.0,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
           child:
@@ -160,7 +153,7 @@ class _HomePageViewState extends State<_HomePageView> {
   Container _card(double width, ThemeData theme, HomeState state) {
     return Container(
         width: width,
-        height: width - 150.00,
+        height: 230.0,
         decoration: BoxDecoration(
             color: theme.colorScheme.primary,
             borderRadius: BorderRadius.circular(36.0),
