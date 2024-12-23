@@ -40,8 +40,8 @@ class AuthRepositoryImpl extends AuthRepository {
       user.id = uid;
 
       return UserModel.fromEntity(user);
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }
@@ -53,8 +53,18 @@ class AuthRepositoryImpl extends AuthRepository {
       final password = params.password;
 
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) {
-      log(e.toString());
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+    } catch (e, stackTrace) {
+      log(e.toString(), stackTrace: stackTrace);
       rethrow;
     }
   }

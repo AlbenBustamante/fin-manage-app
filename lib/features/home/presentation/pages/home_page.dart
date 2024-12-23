@@ -4,6 +4,7 @@ import 'package:finmanageapp/core/config/init_dependencies.dart';
 import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
+import 'package:finmanageapp/features/home/presentation/pages/config_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/transaction_detail.dart';
 import 'package:finmanageapp/shared/components/custom_bottom_navigation_bar.dart';
 import 'package:finmanageapp/shared/components/custom_navbar_floating_action_button.dart';
@@ -252,7 +253,9 @@ class _HomePageViewState extends State<_HomePageView> {
               child: IconButton(
                   icon:
                       Icon(Icons.settings, size: 32.0, color: Colors.grey[700]),
-                  onPressed: () {}))
+                  onPressed: () {
+                    Navigator.pushNamed(context, ConfigPage.route);
+                  }))
         ]);
   }
 }

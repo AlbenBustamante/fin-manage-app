@@ -1,7 +1,9 @@
 import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/config_bloc/config_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
+import 'package:finmanageapp/features/home/presentation/pages/config_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_expense_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_income_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/transaction_detail.dart';
@@ -23,6 +25,7 @@ class MyApp extends StatelessWidget {
     return RepositoryProvider<AuthBloc>(
         create: (context) => AuthBloc(ij<AuthRepository>()),
         child: MultiBlocProvider(providers: [
+          BlocProvider(create: (context) => ij<ConfigBloc>()),
           BlocProvider(create: (context) => ij<ExpensesBloc>()),
           BlocProvider(create: (context) => ij<IncomesBloc>())
         ], child: const MyAppView()));
@@ -51,6 +54,8 @@ class MyAppView extends StatelessWidget {
         return _route(const SignInPage());
       case HomePage.route:
         return _route(const HomePage());
+      case ConfigPage.route:
+        return _route(const ConfigPage());
       case NewIncomePage.route:
         return _route(const NewIncomePage());
       case NewExpensePage.route:
@@ -85,7 +90,7 @@ class MyAppView extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[900]),
             bodyMedium: TextStyle(
-                fontSize: 20.0,
+                fontSize: 17.0,
                 fontWeight: FontWeight.w400,
                 color: Colors.grey[700]),
             bodySmall: TextStyle(

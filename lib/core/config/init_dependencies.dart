@@ -1,6 +1,7 @@
 import 'package:finmanageapp/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:finmanageapp/features/auth/domain/repository/auth_repository.dart';
 import 'package:finmanageapp/features/auth/domain/use_cases/sign_in_use_case.dart';
+import 'package:finmanageapp/features/auth/domain/use_cases/sign_out_use_case.dart';
 import 'package:finmanageapp/features/auth/domain/use_cases/sign_up_use_case.dart';
 import 'package:finmanageapp/features/auth/presentation/blocs/sign_in/sign_in_bloc.dart';
 import 'package:finmanageapp/features/home/data/repositories/category_repository_impl.dart';
@@ -18,6 +19,7 @@ import 'package:finmanageapp/features/home/domain/use_cases/get_income_categorie
 import 'package:finmanageapp/features/home/domain/use_cases/get_income_descriptions_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/register_expense_transaction_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/register_income_transaction_use_case.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/config_bloc/config_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
@@ -41,6 +43,7 @@ void init() {
   // use cases
   ij.registerSingleton(SignUpUseCase(ij<AuthRepository>()));
   ij.registerSingleton(SignInUseCase(ij<AuthRepository>()));
+  ij.registerSingleton(SignOutUseCase(ij<AuthRepository>()));
   ij.registerSingleton(GetExpenseCategoriesUseCase(ij<CategoryRepository>()));
   ij.registerSingleton(
       GetExpenseDescriptionsUseCase(ij<DescriptionRepository>()));
@@ -58,6 +61,7 @@ void init() {
   // blocs
   ij.registerSingleton(SignUpBloc(ij<SignUpUseCase>()));
   ij.registerSingleton(SignInBloc(ij<SignInUseCase>()));
+  ij.registerSingleton(ConfigBloc(ij<SignOutUseCase>()));
   ij.registerSingleton(ExpensesBloc(
       ij<GetExpenseCategoriesUseCase>(),
       ij<GetExpenseDescriptionsUseCase>(),

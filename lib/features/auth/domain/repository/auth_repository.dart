@@ -7,4 +7,6 @@ abstract class AuthRepository {
   Future<UserModel> signUp({required SignUpParams params});
 
   Future<void> signIn({required SignInParams params});
+
+  Future<void> signOut();
 }
