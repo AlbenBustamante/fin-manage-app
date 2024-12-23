@@ -1,4 +1,5 @@
 import 'package:finmanageapp/core/config/init_dependencies.dart';
+import 'package:finmanageapp/core/util/currency_formatter.dart';
 import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
@@ -131,7 +132,7 @@ class _HomePageViewState extends State<_HomePageView> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                      "${transaction.type == TransactionType.expense ? '-' : '+'} ${transaction.value}",
+                      "${transaction.type == TransactionType.expense ? '-' : '+'} ${CurrencyFormatter.format(transaction.value)}",
                       style: const TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.bold)),
                   Text(formatter.format(transaction.date),
@@ -158,7 +159,7 @@ class _HomePageViewState extends State<_HomePageView> {
   Container _card(double width, ThemeData theme, HomeState state) {
     return Container(
         width: width,
-        height: 230.0,
+        height: 216.0,
         decoration: BoxDecoration(
             color: theme.colorScheme.primary,
             borderRadius: BorderRadius.circular(36.0),
@@ -177,12 +178,13 @@ class _HomePageViewState extends State<_HomePageView> {
         const Text('Saldo Total',
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 18.0,
                 fontWeight: FontWeight.bold)),
-        Text(state is Success ? '${state.totalBalance}' : '0',
+        Text(
+            CurrencyFormatter.format(state is Success ? state.totalBalance : 0),
             style: const TextStyle(
                 color: Colors.white,
-                fontSize: 44.0,
+                fontSize: 40.0,
                 fontWeight: FontWeight.bold))
       ]),
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -201,16 +203,16 @@ class _HomePageViewState extends State<_HomePageView> {
               color: Colors.black.withOpacity(.1),
               borderRadius: BorderRadius.circular(25.0)),
           child: Icon(expense ? Icons.arrow_upward : Icons.arrow_downward,
-              size: 32.0, color: expense ? Colors.red[400] : Colors.green[400]),
+              size: 28.0, color: expense ? Colors.red[400] : Colors.green[400]),
         ),
         const SizedBox(width: 12.0),
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(expense ? 'Gastos' : 'Ingresos',
-              style: const TextStyle(color: Colors.white, fontSize: 17.0)),
-          Text('$amount',
+              style: const TextStyle(color: Colors.white, fontSize: 16.0)),
+          Text(CurrencyFormatter.format(amount),
               style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 18.0,
+                  fontSize: 17.0,
                   fontWeight: FontWeight.bold))
         ]),
       ],

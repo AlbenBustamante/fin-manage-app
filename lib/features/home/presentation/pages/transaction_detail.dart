@@ -1,3 +1,4 @@
+import 'package:finmanageapp/core/util/currency_formatter.dart';
 import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,8 @@ class TransactionDetail extends StatelessWidget {
                     fontSize: 24.0,
                     color: Colors.grey[800],
                     fontWeight: FontWeight.w500)),
-            Text('${expense ? '-' : '+'} ${_transaction.value}',
+            Text(
+                '${expense ? '-' : '+'} ${CurrencyFormatter.format(_transaction.value)}',
                 style: TextStyle(
                   color: Colors.grey[900],
                   fontSize: 28.0,
