@@ -4,6 +4,7 @@ import 'package:finmanageapp/core/config/init_dependencies.dart';
 import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
+import 'package:finmanageapp/features/home/presentation/pages/transaction_detail.dart';
 import 'package:finmanageapp/shared/components/custom_bottom_navigation_bar.dart';
 import 'package:finmanageapp/shared/components/custom_navbar_floating_action_button.dart';
 import 'package:flutter/material.dart';
@@ -102,37 +103,43 @@ class _HomePageViewState extends State<_HomePageView> {
     );
   }
 
-  Container _transaction(double width, TransactionModel transaction) {
+  GestureDetector _transaction(double width, TransactionModel transaction) {
     final formatter = DateFormat('dd/MM/yyyy');
 
-    return Container(
-        margin: const EdgeInsets.only(bottom: 20.0),
-        padding: const EdgeInsets.symmetric(horizontal: 25.0),
-        width: width,
-        height: 100.0,
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          SizedBox(
-            width: width - 250.0,
-            child: Text(transaction.category,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 19.0, fontWeight: FontWeight.w900)),
-          ),
-          Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                    "${transaction.type == TransactionType.expense ? '-' : '+'} ${transaction.value}",
-                    style: const TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.bold)),
-                Text(formatter.format(transaction.date),
-                    style: const TextStyle(fontWeight: FontWeight.w300))
-              ])
-        ]));
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, TransactionDetail.route,
+            arguments: transaction);
+      },
+      child: Container(
+          margin: const EdgeInsets.only(bottom: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          width: width,
+          height: 100.0,
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            SizedBox(
+              width: width - 250.0,
+              child: Text(transaction.category,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 19.0, fontWeight: FontWeight.w900)),
+            ),
+            Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                      "${transaction.type == TransactionType.expense ? '-' : '+'} ${transaction.value}",
+                      style: const TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.bold)),
+                  Text(formatter.format(transaction.date),
+                      style: const TextStyle(fontWeight: FontWeight.w300))
+                ])
+          ])),
+    );
   }
 
   Row _transactionsTitle() {

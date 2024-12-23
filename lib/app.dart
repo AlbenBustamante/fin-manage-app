@@ -1,8 +1,10 @@
 import 'package:finmanageapp/features/auth/presentation/pages/sign_in_page.dart';
+import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_expense_page.dart';
 import 'package:finmanageapp/features/home/presentation/pages/new_income_page.dart';
+import 'package:finmanageapp/features/home/presentation/pages/transaction_detail.dart';
 
 import 'auth_flow/auth_flow_page.dart';
 import 'core/config/init_dependencies.dart';
@@ -53,6 +55,9 @@ class MyAppView extends StatelessWidget {
         return _route(const NewIncomePage());
       case NewExpensePage.route:
         return _route(const NewExpensePage());
+      case TransactionDetail.route:
+        return _route(
+            TransactionDetail(settings.arguments as TransactionModel));
       default:
         return _route(const AuthFlowPage());
     }
@@ -75,12 +80,14 @@ class MyAppView extends StatelessWidget {
                 fontSize: 18.0,
                 fontWeight: FontWeight.w300,
                 color: Colors.grey[700]),
-            labelMedium:
-                const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500),
+            labelMedium: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[900]),
             bodyMedium: TextStyle(
-                fontSize: 17.0,
+                fontSize: 20.0,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey[600]),
+                color: Colors.grey[700]),
             bodySmall: TextStyle(
                 fontSize: 14.0,
                 fontWeight: FontWeight.w400,
