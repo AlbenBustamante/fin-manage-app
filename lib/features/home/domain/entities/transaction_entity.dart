@@ -9,6 +9,7 @@ class TransactionEntity {
   final int value;
   final DateTime date;
   final TransactionType type;
+  final DateTime? createdDate;
 
   TransactionEntity(
       {this.id,
@@ -17,7 +18,8 @@ class TransactionEntity {
       required this.descriptionId,
       required this.value,
       required this.date,
-      required this.type});
+      required this.type,
+      this.createdDate});
 
   factory TransactionEntity.fromJson(Map<String, dynamic> json) {
     return TransactionEntity(
@@ -26,7 +28,9 @@ class TransactionEntity {
         descriptionId: json['descriptionId'],
         value: json['value'],
         date: (json['date'] as Timestamp).toDate(),
-        type: json['type'] as TransactionType);
+        type: TransactionType.values
+            .firstWhere((type) => type.name == json['type']),
+        createdDate: (json['createdDate'] as Timestamp).toDate());
   }
 
   Map<String, dynamic> toJson() => {
@@ -35,7 +39,9 @@ class TransactionEntity {
         'descriptionId': descriptionId,
         'value': value,
         'date': Timestamp.fromDate(date),
-        'type': type.name
+        'type': type.name,
+        'createdDate': Timestamp.fromDate(
+            createdDate != null ? createdDate! : DateTime.now())
       };
 
   factory TransactionEntity.fromDocument(DocumentSnapshot doc) {

@@ -67,4 +67,12 @@ class DescriptionRepositoryImpl implements DescriptionRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<String> fetchNameById(String descriptionId) async {
+    final snapshot = await _collection.doc(descriptionId).get();
+    final json = snapshot.data();
+
+    return json?['text'] ?? '';
+  }
 }

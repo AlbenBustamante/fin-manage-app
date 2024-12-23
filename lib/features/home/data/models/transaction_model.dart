@@ -2,19 +2,22 @@ import 'package:finmanageapp/core/util/enums.dart';
 import 'package:finmanageapp/features/home/domain/entities/transaction_entity.dart';
 
 class TransactionModel {
+  String category, description;
   final String id, userId, categoryId, descriptionId;
   final int value;
   final DateTime date;
   final TransactionType type;
 
-  const TransactionModel(
+  TransactionModel(
       {required this.id,
       required this.userId,
       required this.categoryId,
       required this.descriptionId,
       required this.value,
       required this.date,
-      required this.type});
+      required this.type,
+      required this.category,
+      required this.description});
 
   factory TransactionModel.fromEntity(TransactionEntity entity) {
     return TransactionModel(
@@ -24,11 +27,13 @@ class TransactionModel {
         descriptionId: entity.descriptionId,
         value: entity.value,
         date: entity.date,
-        type: entity.type);
+        type: entity.type,
+        category: '',
+        description: '');
   }
 
   @override
   String toString() {
-    return 'Transaction Model: $id, $userId, $categoryId, $descriptionId, $value, $date, $type';
+    return 'Transaction Model: $id, $userId, $categoryId: $category, $descriptionId: $description, $value, $date, $type';
   }
 }

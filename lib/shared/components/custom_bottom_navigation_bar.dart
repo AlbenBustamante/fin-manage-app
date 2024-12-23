@@ -18,10 +18,13 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap: (index) => onTap(index),
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined, size: iconSize), label: 'Home'),
+              icon: Icon(Icons.home_outlined, size: iconSize),
+              label: 'Home',
+              activeIcon: Icon(Icons.home, size: iconSize)),
           BottomNavigationBarItem(
               icon: Icon(Icons.list_alt_outlined, size: iconSize),
-              label: 'Reports')
+              label: 'Reports',
+              activeIcon: Icon(Icons.list_alt, size: iconSize))
         ]);
   }
 }

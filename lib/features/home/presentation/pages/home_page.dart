@@ -1,18 +1,44 @@
+import 'dart:developer';
+
+import 'package:finmanageapp/core/config/init_dependencies.dart';
+import 'package:finmanageapp/core/util/enums.dart';
+import 'package:finmanageapp/features/home/data/models/transaction_model.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:finmanageapp/shared/components/custom_bottom_navigation_bar.dart';
 import 'package:finmanageapp/shared/components/custom_navbar_floating_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   static const route = '/home';
 
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => ij<HomeBloc>(),
+      child: const _HomePageView(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageView extends StatefulWidget {
+  const _HomePageView();
+
+  @override
+  State<_HomePageView> createState() => _HomePageViewState();
+}
+
+class _HomePageViewState extends State<_HomePageView> {
   int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(FetchData());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,26 +47,33 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
         appBar: _appBar(theme),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Column(children: [
-              _card(width, theme),
-              const SizedBox(height: 40.0),
-              _transactionsTitle(),
-              const SizedBox(height: 20.0),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width),
-              _transaction(width)
-            ]),
-          ),
+        body: BlocConsumer<HomeBloc, HomeState>(
+          listener: (context, state) {
+            if (state is Success) {
+              log(state.user.toString());
+              log('${state.totalBalance}');
+            }
+
+            if (state is Failure) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.error)));
+            }
+          },
+          builder: (context, state) {
+            if (state is HomeInitial) {
+              return const Center(child: Text('Por favor, espere...'));
+            }
+
+            if (state is Loading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (state is Success || state is Failure) {
+              return _view(theme, width, state);
+            }
+
+            return Container();
+          },
         ),
         bottomNavigationBar: _navigationBar(),
         floatingActionButton: CustomNavbarFloatingActionButton(theme: theme),
@@ -48,7 +81,30 @@ class _HomePageState extends State<HomePage> {
             FloatingActionButtonLocation.centerDocked);
   }
 
-  Container _transaction(double width) {
+  Widget _view(ThemeData theme, double width, HomeState state) {
+    return Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(children: [
+        _card(width, theme, state),
+        const SizedBox(height: 40.0),
+        _transactionsTitle(),
+        const SizedBox(height: 20.0),
+        if (state is Success)
+          Flexible(
+            child: ListView.builder(
+              itemCount: state.transactions.length,
+              itemBuilder: (context, index) {
+                return _transaction(width, state.transactions[index]);
+              },
+            ),
+          )
+      ]),
+    );
+  }
+
+  Container _transaction(double width, TransactionModel transaction) {
+    final formatter = DateFormat('dd/MM/yyyy');
+
     return Container(
         margin: const EdgeInsets.only(bottom: 20.0),
         padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -56,22 +112,27 @@ class _HomePageState extends State<HomePage> {
         height: 100.0,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(25.0)),
-        child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Comida',
-                  style:
-                      TextStyle(fontSize: 19.0, fontWeight: FontWeight.w900)),
-              Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text('9.999.999',
-                        style: TextStyle(
-                            fontSize: 18.0, fontWeight: FontWeight.bold)),
-                    Text('Hoy', style: TextStyle(fontWeight: FontWeight.w300))
-                  ])
-            ]));
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          SizedBox(
+            width: width - 250.0,
+            child: Text(transaction.category,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 19.0, fontWeight: FontWeight.w900)),
+          ),
+          Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                    "${transaction.type == TransactionType.expense ? '-' : '+'} ${transaction.value}",
+                    style: const TextStyle(
+                        fontSize: 18.0, fontWeight: FontWeight.bold)),
+                Text(formatter.format(transaction.date),
+                    style: const TextStyle(fontWeight: FontWeight.w300))
+              ])
+        ]));
   }
 
   Row _transactionsTitle() {
@@ -88,7 +149,7 @@ class _HomePageState extends State<HomePage> {
     ]);
   }
 
-  Container _card(double width, ThemeData theme) {
+  Container _card(double width, ThemeData theme, HomeState state) {
     return Container(
         width: width,
         height: width - 150.00,
@@ -100,27 +161,28 @@ class _HomePageState extends State<HomePage> {
             ]),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
-          child: _cardStats(),
+          child: _cardStats(state),
         ));
   }
 
-  Column _cardStats() {
+  Column _cardStats(HomeState state) {
     return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      const Column(children: [
-        Text('Saldo Total',
+      Column(children: [
+        const Text('Saldo Total',
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold)),
-        Text("+# 99.999.999",
-            style: TextStyle(
+        Text(state is Success ? '${state.totalBalance}' : '0',
+            style: const TextStyle(
                 color: Colors.white,
                 fontSize: 44.0,
                 fontWeight: FontWeight.bold))
       ]),
-      Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [_cardStat(false, 999999999), _cardStat(true, 999999999)])
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        _cardStat(false, state is Success ? state.totalIncomes : 0),
+        _cardStat(true, state is Success ? state.totalExpenses : 0)
+      ])
     ]);
   }
 
@@ -162,10 +224,17 @@ class _HomePageState extends State<HomePage> {
   AppBar _appBar(ThemeData theme) {
     return AppBar(
         toolbarHeight: 80.0,
-        title: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('¡Bienvenido!', style: theme.textTheme.titleMedium),
-          Text('Cristal', style: theme.textTheme.titleLarge)
-        ]),
+        title: BlocBuilder<HomeBloc, HomeState>(
+          builder: (context, state) {
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('¡Bienvenido!', style: theme.textTheme.titleMedium),
+                  Text(state is Success ? state.user.name : '',
+                      style: theme.textTheme.titleLarge)
+                ]);
+          },
+        ),
         titleSpacing: 25.0,
         actions: [
           Container(

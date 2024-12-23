@@ -9,13 +9,17 @@ import 'package:finmanageapp/features/home/data/repositories/transaction_reposit
 import 'package:finmanageapp/features/home/domain/repositories/category_repository.dart';
 import 'package:finmanageapp/features/home/domain/repositories/description_repository.dart';
 import 'package:finmanageapp/features/home/domain/repositories/transaction_repository.dart';
+import 'package:finmanageapp/features/home/domain/use_cases/get_current_user_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/get_expense_categories_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/get_expense_descriptions_use_case.dart';
+import 'package:finmanageapp/features/home/domain/use_cases/get_home_stats_use_case.dart';
+import 'package:finmanageapp/features/home/domain/use_cases/get_home_transactions_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/get_income_categories_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/get_income_descriptions_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/register_expense_transaction_use_case.dart';
 import 'package:finmanageapp/features/home/domain/use_cases/register_income_transaction_use_case.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/expenses_bloc/expenses_bloc.dart';
+import 'package:finmanageapp/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:finmanageapp/features/home/presentation/blocs/incomes_bloc/incomes_bloc.dart';
 import 'package:get_it/get_it.dart';
 
@@ -47,6 +51,9 @@ void init() {
       RegisterExpenseTransactionUseCase(ij<TransactionRepository>()));
   ij.registerSingleton(
       RegisterIncomeTransactionUseCase(ij<TransactionRepository>()));
+  ij.registerSingleton(GetCurrentUserUseCase(ij<AuthRepository>()));
+  ij.registerSingleton(GetHomeStatsUseCase(ij<TransactionRepository>()));
+  ij.registerSingleton(GetHomeTransactionsUseCase(ij<TransactionRepository>()));
 
   // blocs
   ij.registerSingleton(SignUpBloc(ij<SignUpUseCase>()));
@@ -59,4 +66,6 @@ void init() {
       ij<GetIncomeCategoriesUseCase>(),
       ij<GetIncomeDescriptionsUseCase>(),
       ij<RegisterIncomeTransactionUseCase>()));
+  ij.registerSingleton(HomeBloc(ij<GetCurrentUserUseCase>(),
+      ij<GetHomeStatsUseCase>(), ij<GetHomeTransactionsUseCase>()));
 }

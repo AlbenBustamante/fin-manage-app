@@ -7,4 +7,6 @@ abstract class CategoryRepository {
 
   Future<List<CategoryModel>> fetchAllByType(
       {required GetByTransactionTypeParams params});
+
+  Future<String> fetchNameById(String categoryId);
 }

@@ -55,4 +55,12 @@ class CategoryRepositoryImpl implements CategoryRepository {
       rethrow;
     }
   }
+
+  @override
+  Future<String> fetchNameById(String categoryId) async {
+    final snapshot = await _collection.doc(categoryId).get();
+    final json = snapshot.data();
+
+    return json?['name'] ?? '';
+  }
 }

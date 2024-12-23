@@ -7,4 +7,6 @@ abstract class DescriptionRepository {
 
   Future<List<DescriptionModel>> fetchAllByType(
       {required GetByTransactionTypeParams params});
+
+  Future<String> fetchNameById(String descriptionId);
 }
