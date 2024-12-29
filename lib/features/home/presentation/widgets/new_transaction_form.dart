@@ -34,6 +34,8 @@ class _NewTransactionFormState extends State<NewTransactionForm> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  final _categoryFocusNode = FocusNode();
+  final _descriptionFocusNode = FocusNode();
   var _selectedDate = DateTime.now();
 
   static const _format = "EEE, dd MMM, ''yy";
@@ -46,6 +48,12 @@ class _NewTransactionFormState extends State<NewTransactionForm> {
 
   @override
   Widget build(BuildContext context) {
+    final categories =
+        widget.categories.map((category) => category.name).toList();
+
+    final descriptions =
+        widget.descriptions.map((description) => description.text).toList();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -61,17 +69,16 @@ class _NewTransactionFormState extends State<NewTransactionForm> {
               radius: 45.0),
           const SizedBox(height: 12.0),
           CustomAutoCompleteTextField(
+              focusNode: _categoryFocusNode,
               controller: _categoryController,
-              elements:
-                  widget.categories.map((category) => category.name).toList(),
+              elements: categories,
               theme: widget.theme,
               icon: Icons.category_outlined,
               hintText: 'Categoría'),
           CustomAutoCompleteTextField(
+              focusNode: _descriptionFocusNode,
               controller: _descriptionController,
-              elements: widget.descriptions
-                  .map((description) => description.text)
-                  .toList(),
+              elements: descriptions,
               theme: widget.theme,
               icon: Icons.note_alt_outlined,
               hintText: 'Descripción'),

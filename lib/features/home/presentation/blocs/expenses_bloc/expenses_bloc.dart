@@ -16,8 +16,8 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
   final GetExpenseCategoriesUseCase _getExpenseCategoriesUseCase;
   final GetExpenseDescriptionsUseCase _getExpenseDescriptionsUseCase;
   final RegisterExpenseTransactionUseCase _registerExpenseTransactionUseCase;
-  final _categories = <CategoryModel>[];
-  final _descriptions = <DescriptionModel>[];
+  var _categories = <CategoryModel>[];
+  var _descriptions = <DescriptionModel>[];
 
   ExpensesBloc(
       this._getExpenseCategoriesUseCase,
@@ -28,8 +28,8 @@ class ExpensesBloc extends Bloc<ExpensesEvent, ExpensesState> {
       emit(FetchLoading());
 
       try {
-        _categories.addAll(await _getExpenseCategoriesUseCase());
-        _descriptions.addAll(await _getExpenseDescriptionsUseCase());
+        _categories = await _getExpenseCategoriesUseCase();
+        _descriptions = await _getExpenseDescriptionsUseCase();
 
         emit(FetchSuccess(_categories, _descriptions));
       } catch (e) {

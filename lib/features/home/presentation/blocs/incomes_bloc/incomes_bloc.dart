@@ -16,8 +16,8 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
   final GetIncomeCategoriesUseCase _getIncomeCategoriesUseCase;
   final GetIncomeDescriptionsUseCase _getIncomeDescriptionsUseCase;
   final RegisterIncomeTransactionUseCase _registerIncomeTransactionUseCase;
-  final _categories = <CategoryModel>[];
-  final _descriptions = <DescriptionModel>[];
+  var _categories = <CategoryModel>[];
+  var _descriptions = <DescriptionModel>[];
 
   IncomesBloc(
       this._getIncomeCategoriesUseCase,
@@ -28,8 +28,8 @@ class IncomesBloc extends Bloc<IncomesEvent, IncomesState> {
       emit(FetchLoading());
 
       try {
-        _categories.addAll(await _getIncomeCategoriesUseCase());
-        _descriptions.addAll(await _getIncomeDescriptionsUseCase());
+        _categories = await _getIncomeCategoriesUseCase();
+        _descriptions = await _getIncomeDescriptionsUseCase();
 
         emit(FetchSuccess(_categories, _descriptions));
       } catch (e) {
